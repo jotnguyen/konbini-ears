@@ -1,0 +1,629 @@
+# Konbini Ears — Japanese service-encounter pack.
+#
+# A pack is a list of scenes. A scene is an ordered list of steps; a drill run walks the steps in
+# order, keeps each one with probability `p`, and picks one variant at random, in a random voice.
+#
+# Step fields:
+#   id       stable id (kebab-case, unique in the pack)
+#   kind     staff (default) = they say it, you identify it
+#            you             = you say it: `en` is what you want, the variants are model answers
+#   p        chance the step appears in a run (default 1)
+#   en       what it means (the right answer in the "what did they ask?" choice)
+#   key      the word to listen for, with its meaning
+#   heard    how it tends to sound at full speed (reductions, swallowed vowels)
+#   say      variants: {ja, kana, en?, choices?}
+#              kana     reading, spaced into words; particles は/を/へ as their own tokens
+#              en       overrides the step's meaning for this variant
+#              choices  overrides the answer choices; the first one is correct
+#   replies  what you can say back: {ja, kana, en}
+#   note     optional tip shown after the answer
+
+lang: ja
+title: Konbini Ears
+subtitle: Hear what Japanese staff say, at full speed, and answer without freezing.
+
+# Kokoro voices (speech-kit). Staff lines are recorded in every staff voice; your lines in one.
+voices:
+  staff: [jf_alpha, jm_kumo]
+  you: jm_kumo
+speed: 1.0
+
+scenes:
+
+  # ── Konbini ──────────────────────────────────────────────────────────
+  - id: konbini
+    title: Konbini checkout
+    blurb: Point card, bag, heating, chopsticks, paying. The same eight questions every time, asked fast.
+    steps:
+      - id: kb-greet
+        en: "Welcome! (no reply needed)"
+        heard: "Often just the tail: \"…shaimase!\" shouted from the back."
+        say:
+          - {ja: "いらっしゃいませ", kana: "いらっしゃいませ"}
+          - {ja: "いらっしゃいませ、こんにちは", kana: "いらっしゃいませ、 こんにちは"}
+      - id: kb-next
+        p: 0.4
+        en: "Next customer, please"
+        key: "次 (tsugi) = next"
+        say:
+          - {ja: "次の方どうぞ", kana: "つぎ の かた どうぞ"}
+          - {ja: "お次の方どうぞ", kana: "おつぎ の かた どうぞ"}
+          - {ja: "こちらのレジへどうぞ", kana: "こちら の れじ へ どうぞ", en: "Come to this register, please", key: "レジ (reji) = register"}
+      - id: kb-point
+        p: 0.8
+        en: "Do you have a point card?"
+        key: "ポイントカード (pointo kaado) + お持ち (omochi) = do you have"
+        heard: "\"pointokaado omochi desu ka\" runs together; listen for \"…omochi…\"."
+        say:
+          - {ja: "ポイントカードはお持ちですか", kana: "ぽいんとかーど は おもち です か"}
+          - {ja: "ポイントカードございますか", kana: "ぽいんとかーど ございます か"}
+          - {ja: "ポイントカードお持ちでしょうか", kana: "ぽいんとかーど おもち でしょう か"}
+        replies:
+          - {ja: "持ってないです", kana: "もって ない です", en: "I don't have one"}
+          - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "No thanks (the all-purpose polite no)"}
+      - id: kb-heat
+        p: 0.6
+        en: "Shall I heat this up?"
+        key: "温め (atatame) = warming up"
+        heard: "\"kochira atatame masu ka\" → \"atatamemaska\"."
+        say:
+          - {ja: "こちら温めますか", kana: "こちら あたため ます か"}
+          - {ja: "お弁当温めますか", kana: "お べんとう あたため ます か"}
+          - {ja: "温めはどうされますか", kana: "あたため は どう され ます か"}
+        replies:
+          - {ja: "はい、お願いします", kana: "はい、 おねがい します", en: "Yes, please"}
+          - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "No thanks"}
+      - id: kb-hashi
+        p: 0.6
+        en: "Do you want chopsticks?"
+        key: "お箸 (ohashi) = chopsticks; 膳 (zen) counts pairs"
+        say:
+          - {ja: "お箸はお付けしますか", kana: "お はし は おつけ します か"}
+          - {ja: "お箸ご利用ですか", kana: "お はし ごりよう です か"}
+          - {ja: "お箸は何膳お付けしますか", kana: "お はし は なんぜん おつけ します か", en: "How many pairs of chopsticks?"}
+        replies:
+          - {ja: "一膳お願いします", kana: "いちぜん おねがい します", en: "One pair, please"}
+          - {ja: "二膳お願いします", kana: "にぜん おねがい します", en: "Two pairs, please"}
+          - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "No thanks"}
+      - id: kb-spoon
+        p: 0.3
+        en: "Do you want a spoon?"
+        key: "スプーン (supuun) = spoon"
+        say:
+          - {ja: "スプーンお付けしますか", kana: "すぷーん おつけ します か"}
+          - {ja: "スプーンご利用ですか", kana: "すぷーん ごりよう です か"}
+        replies:
+          - {ja: "はい、お願いします", kana: "はい、 おねがい します", en: "Yes, please"}
+          - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "No thanks"}
+      - id: kb-bag
+        p: 0.9
+        en: "Do you need a bag? (it costs a few yen)"
+        key: "袋 (fukuro) = bag; レジ袋 (rejibukuro) = plastic bag"
+        heard: "\"fukuro goriyou desu ka\" → \"fukuro goriyo-ska\". Catch \"fukuro\" and you've got it."
+        say:
+          - {ja: "袋はご利用ですか", kana: "ふくろ は ごりよう です か"}
+          - {ja: "袋お付けしますか", kana: "ふくろ おつけ します か"}
+          - {ja: "レジ袋はご利用ですか", kana: "れじぶくろ は ごりよう です か"}
+          - {ja: "袋いりますか", kana: "ふくろ いります か"}
+        replies:
+          - {ja: "はい、お願いします", kana: "はい、 おねがい します", en: "Yes, please"}
+          - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "No thanks"}
+          - {ja: "小さい袋でお願いします", kana: "ちいさい ふくろ で おねがい します", en: "A small bag, please"}
+      - id: kb-split
+        p: 0.3
+        en: "Separate bags for the hot and cold things?"
+        key: "分け (wake) = separate"
+        say:
+          - {ja: "袋お分けしますか", kana: "ふくろ おわけ します か"}
+          - {ja: "温かいものと冷たいもの、袋分けますか", kana: "あたたかい もの と つめたい もの、 ふくろ わけ ます か"}
+        replies:
+          - {ja: "はい、お願いします", kana: "はい、 おねがい します", en: "Yes, please"}
+          - {ja: "一緒で大丈夫です", kana: "いっしょ で だいじょうぶ です", en: "Together is fine"}
+      - id: kb-age
+        p: 0.2
+        en: "Please tap the screen (age check for alcohol)"
+        key: "画面 (gamen) = screen; 年齢確認 (nenrei kakunin) = age check"
+        say:
+          - {ja: "画面のタッチをお願いします", kana: "がめん の たっち を おねがい します"}
+          - {ja: "年齢確認のボタンをお願いします", kana: "ねんれい かくにん の ぼたん を おねがい します"}
+        note: "Tap はい on the customer screen. No reply needed."
+      - id: kb-total
+        en: "Your total is …"
+        key: "円 (en) = yen; 合計 (goukei) / 全部で (zenbu de) = total"
+        heard: "Numbers are where people freeze. Hundreds: …hyaku / …byaku / …pyaku."
+        say:
+          - {ja: "合計で842円です", kana: "ごうけい で はっぴゃく よんじゅう に えん です", choices: ["842 yen", "824 yen", "482 yen", "1,842 yen"]}
+          - {ja: "全部で1280円になります", kana: "ぜんぶ で せん にひゃく はちじゅう えん に なります", choices: ["1,280 yen", "1,820 yen", "2,180 yen", "280 yen"]}
+          - {ja: "530円でございます", kana: "ごひゃく さんじゅう えん で ございます", choices: ["530 yen", "350 yen", "513 yen", "5,300 yen"]}
+          - {ja: "お会計、316円です", kana: "お かいけい、 さんびゃく じゅうろく えん です", choices: ["316 yen", "360 yen", "613 yen", "3,160 yen"]}
+          - {ja: "合計で1,075円です", kana: "ごうけい で せん ななじゅうご えん です", choices: ["1,075 yen", "1,750 yen", "175 yen", "7,015 yen"]}
+      - id: kb-pay
+        p: 0.9
+        en: "How will you pay?"
+        key: "お支払い (oshiharai) = payment"
+        heard: "\"oshiharai wa\" with a rising tone is the whole question."
+        say:
+          - {ja: "お支払い方法はどうされますか", kana: "お しはらい ほうほう は どう され ます か"}
+          - {ja: "お支払いはいかがなさいますか", kana: "お しはらい は いかが なさい ます か"}
+          - {ja: "お支払いは", kana: "お しはらい は"}
+        replies:
+          - {ja: "カードでお願いします", kana: "かーど で おねがい します", en: "By card, please"}
+          - {ja: "現金で", kana: "げんきん で", en: "Cash"}
+          - {ja: "Suicaでお願いします", kana: "すいか で おねがい します", en: "With Suica, please"}
+      - id: kb-terminal
+        p: 0.4
+        en: "Tap your card or phone on the reader"
+        key: "タッチ (tacchi) = tap; 挿して (sashite) = insert"
+        say:
+          - {ja: "こちらにタッチをお願いします", kana: "こちら に たっち を おねがい します"}
+          - {ja: "カードをお差しください", kana: "かーど を おさし ください", en: "Please insert your card"}
+          - {ja: "暗証番号の入力をお願いします", kana: "あんしょう ばんごう の にゅうりょく を おねがい します", en: "Please enter your PIN"}
+      - id: kb-change
+        p: 0.5
+        en: "Here's your change"
+        key: "お預かり (oazukari) = I'm taking your money; お返し (okaeshi) = change back"
+        say:
+          - {ja: "1000円お預かりします", kana: "せん えん おあずかり します", en: "I'll take your 1,000 yen"}
+          - {ja: "158円のお返しです", kana: "ひゃく ごじゅう はち えん の おかえし です", en: "Your change is 158 yen", choices: ["Your change is 158 yen", "Your change is 185 yen", "Your total is 158 yen", "Your change is 1,058 yen"]}
+          - {ja: "お先に大きい方、2000円のお返しです", kana: "お さき に おおきい ほう、 にせん えん の おかえし です", en: "First the bills: 2,000 yen back"}
+      - id: kb-receipt
+        p: 0.6
+        en: "Do you want the receipt?"
+        key: "レシート (reshiito) = receipt"
+        say:
+          - {ja: "レシートはご入用ですか", kana: "れしーと は ごいりよう です か"}
+          - {ja: "レシートはよろしいですか", kana: "れしーと は よろしい です か"}
+          - {ja: "レシートお使いですか", kana: "れしーと おつかい です か"}
+        replies:
+          - {ja: "はい、ください", kana: "はい、 ください", en: "Yes, please"}
+          - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "No thanks"}
+      - id: kb-bye
+        en: "Thank you! (come again)"
+        heard: "\"arigatou gozaimashita\" → \"…zaimashta!\""
+        say:
+          - {ja: "ありがとうございました", kana: "ありがとう ございました"}
+          - {ja: "ありがとうございました、またお越しくださいませ", kana: "ありがとう ございました、 また おこし くださいませ"}
+
+  # ── Counter: fast food and cafés ─────────────────────────────────────
+  - id: counter
+    title: Fast food & café counter
+    blurb: Eat in or take out, set or single, drink, size, hot or iced. Then wait for your number.
+    steps:
+      - id: ct-greet
+        en: "Welcome, go ahead and order"
+        key: "ご注文 (gochuumon) = order"
+        say:
+          - {ja: "いらっしゃいませ、ご注文をどうぞ", kana: "いらっしゃいませ、 ご ちゅうもん を どうぞ"}
+          - {ja: "お決まりでしたらどうぞ", kana: "お きまり でしたら どうぞ", en: "Whenever you're ready, go ahead"}
+      - id: ct-eatin
+        en: "For here or to go?"
+        key: "店内 (tennai) = in the shop; お持ち帰り (omochikaeri) = take-out; お召し上がり (omeshiagari) = eating"
+        heard: "\"tennai de omeshiagari desu ka\": \"omeshiagari\" is the giveaway."
+        say:
+          - {ja: "店内でお召し上がりですか", kana: "てんない で おめしあがり です か"}
+          - {ja: "こちらでお召し上がりですか", kana: "こちら で おめしあがり です か"}
+          - {ja: "店内ご利用ですか、お持ち帰りですか", kana: "てんない ごりよう です か、 おもちかえり です か"}
+          - {ja: "お持ち帰りですか", kana: "おもちかえり です か"}
+        replies:
+          - {ja: "店内で", kana: "てんない で", en: "For here"}
+          - {ja: "持ち帰りで", kana: "もちかえり で", en: "To go"}
+      - id: ct-order
+        kind: you
+        en: "Order: this one, this one, and also this one."
+        say:
+          - {ja: "これとこれと、あとこれもお願いします", kana: "これ と これ と、 あと これ も おねがい します"}
+        note: "Point at each one. と (to) = and; あと (ato) = and also; も (mo) = too."
+      - id: ct-set
+        p: 0.6
+        en: "Would you like it as a set (meal)?"
+        key: "セット (setto) = set meal; 単品 (tanpin) = item alone"
+        say:
+          - {ja: "セットになさいますか", kana: "せっと に なさい ます か"}
+          - {ja: "セットでよろしいですか", kana: "せっと で よろしい です か"}
+          - {ja: "単品でよろしいですか", kana: "たんぴん で よろしい です か", en: "Just the item on its own?"}
+        replies:
+          - {ja: "セットで", kana: "せっと で", en: "As a set"}
+          - {ja: "単品で", kana: "たんぴん で", en: "Just the item"}
+      - id: ct-drink
+        p: 0.6
+        en: "Would you like a drink with that?"
+        key: "お飲み物 (onomimono) = drink; ご一緒に (goissho ni) = together with"
+        heard: "\"goissho ni onomimono wa ikaga desu ka\" → \"…onomimono ikaga-ska\"."
+        say:
+          - {ja: "ご一緒にお飲み物はいかがですか", kana: "ご いっしょ に お のみもの は いかが です か"}
+          - {ja: "お飲み物は何になさいますか", kana: "お のみもの は なに に なさい ます か", en: "What would you like to drink?"}
+          - {ja: "ドリンクはどうされますか", kana: "どりんく は どう され ます か", en: "What about a drink?"}
+        replies:
+          - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "No thanks"}
+          - {ja: "ウーロン茶で", kana: "うーろんちゃ で", en: "Oolong tea"}
+          - {ja: "コーラでお願いします", kana: "こーら で おねがい します", en: "A cola, please"}
+      - id: ct-size
+        p: 0.6
+        en: "What size?"
+        key: "サイズ (saizu) = size"
+        say:
+          - {ja: "サイズはいかがなさいますか", kana: "さいず は いかが なさい ます か"}
+          - {ja: "サイズはどうされますか", kana: "さいず は どう され ます か"}
+          - {ja: "Mサイズでよろしいですか", kana: "えむ さいず で よろしい です か", en: "Is medium OK?"}
+        replies:
+          - {ja: "Sで", kana: "えす で", en: "Small"}
+          - {ja: "Mで", kana: "えむ で", en: "Medium"}
+          - {ja: "Lでお願いします", kana: "える で おねがい します", en: "Large, please"}
+      - id: ct-temp
+        p: 0.5
+        en: "Hot or iced?"
+        key: "ホット (hotto) / アイス (aisu); 温かい (atatakai) / 冷たい (tsumetai)"
+        say:
+          - {ja: "ホットとアイス、どちらになさいますか", kana: "ほっと と あいす、 どちら に なさい ます か"}
+          - {ja: "ホットでよろしいですか", kana: "ほっと で よろしい です か", en: "Is hot OK?"}
+          - {ja: "温かいのと冷たいの、どちらにしますか", kana: "あたたかい の と つめたい の、 どちら に します か"}
+        replies:
+          - {ja: "ホットで", kana: "ほっと で", en: "Hot"}
+          - {ja: "アイスで", kana: "あいす で", en: "Iced"}
+      - id: ct-done
+        p: 0.5
+        en: "Will that be all?"
+        key: "以上 (ijou) = that's all"
+        say:
+          - {ja: "ご注文は以上でよろしいですか", kana: "ご ちゅうもん は いじょう で よろしい です か"}
+          - {ja: "以上でよろしいですか", kana: "いじょう で よろしい です か"}
+        replies:
+          - {ja: "はい", kana: "はい", en: "Yes"}
+          - {ja: "あと、これもお願いします", kana: "あと、 これ も おねがい します", en: "And this too, please"}
+      - id: ct-wait
+        p: 0.6
+        en: "We'll call your number. Please wait."
+        key: "番号 (bangou) = number; お呼びします (oyobi shimasu) = we'll call"
+        say:
+          - {ja: "番号でお呼びしますので、少々お待ちください", kana: "ばんごう で およびします ので、 しょうしょう おまち ください"}
+          - {ja: "お席までお持ちします", kana: "お せき まで おもち します", en: "We'll bring it to your seat"}
+          - {ja: "出来上がりましたらお呼びします", kana: "できあがりましたら およびします", en: "We'll call you when it's ready"}
+
+  # ── Restaurant / izakaya ─────────────────────────────────────────────
+  - id: restaurant
+    title: Restaurant & izakaya
+    blurb: How many people, which seat, drinks first, ordering, clearing plates, paying.
+    steps:
+      - id: rs-count
+        en: "How many people?"
+        key: "何名様 (nanmei-sama) = how many people"
+        heard: "\"nanmei-sama desu ka\" → \"nanmeisama-ska\". Holding up fingers works too."
+        say:
+          - {ja: "いらっしゃいませ、何名様ですか", kana: "いらっしゃいませ、 なんめいさま です か"}
+          - {ja: "何名様でしょうか", kana: "なんめいさま でしょう か"}
+          - {ja: "お一人様ですか", kana: "お ひとりさま です か", en: "Just one person?"}
+        replies:
+          - {ja: "一人です", kana: "ひとり です", en: "One person"}
+          - {ja: "二人です", kana: "ふたり です", en: "Two people"}
+      - id: rs-smoke
+        p: 0.2
+        en: "Smoking or non-smoking?"
+        key: "タバコ (tabako) = smoking; 禁煙 (kin'en) = non-smoking"
+        say:
+          - {ja: "おタバコは吸われますか", kana: "お たばこ は すわれ ます か"}
+          - {ja: "喫煙席と禁煙席、どちらがよろしいですか", kana: "きつえんせき と きんえんせき、 どちら が よろしい です か"}
+        replies:
+          - {ja: "吸いません", kana: "すいません", en: "I don't smoke"}
+          - {ja: "禁煙席で", kana: "きんえんせき で", en: "Non-smoking"}
+        note: "吸いません (suimasen, I don't smoke) sounds almost like すみません (sumimasen). Context saves you."
+      - id: rs-wait
+        p: 0.3
+        en: "We're full. Can you wait?"
+        key: "満席 (manseki) = full; お待ち (omachi) = waiting"
+        say:
+          - {ja: "ただいま満席でして、少々お待ちいただけますか", kana: "ただいま まんせき でして、 しょうしょう おまち いただけ ます か"}
+          - {ja: "お名前を書いてお待ちください", kana: "お なまえ を かいて おまち ください", en: "Write your name and wait, please"}
+        replies:
+          - {ja: "はい、待ちます", kana: "はい、 まちます", en: "Yes, I'll wait"}
+          - {ja: "どのくらいですか", kana: "どの くらい です か", en: "About how long?"}
+      - id: rs-seat
+        p: 0.8
+        en: "I'll show you to your seat"
+        key: "お席 (oseki) = your seat; ご案内 (goannai) = guiding"
+        say:
+          - {ja: "お席へご案内します", kana: "お せき へ ごあんない します"}
+          - {ja: "こちらへどうぞ", kana: "こちら へ どうぞ", en: "This way, please"}
+          - {ja: "カウンター席でもよろしいですか", kana: "かうんたーせき でも よろしい です か", en: "Is the counter OK?"}
+        replies:
+          - {ja: "はい、大丈夫です", kana: "はい、 だいじょうぶ です", en: "Yes, that's fine"}
+      - id: rs-qr
+        p: 0.4
+        en: "Please order from the QR code / tablet"
+        key: "QRコード (kyuuaaru koodo); タブレット (taburetto)"
+        say:
+          - {ja: "こちらのQRコードからご注文ください", kana: "こちら の きゅーあーる こーど から ご ちゅうもん ください"}
+          - {ja: "ご注文はタブレットでお願いします", kana: "ご ちゅうもん は たぶれっと で おねがい します"}
+      - id: rs-drinks
+        p: 0.6
+        en: "Have you decided on drinks?"
+        key: "お飲み物 (onomimono) = drinks; 先に (saki ni) = first"
+        say:
+          - {ja: "お飲み物はお決まりですか", kana: "お のみもの は お きまり です か"}
+          - {ja: "先にお飲み物お伺いします", kana: "さき に お のみもの おうかがい します", en: "Let me take your drink order first"}
+        replies:
+          - {ja: "生ビールをお願いします", kana: "なまびーる を おねがい します", en: "A draft beer, please"}
+          - {ja: "お水で大丈夫です", kana: "お みず で だいじょうぶ です", en: "Water is fine"}
+      - id: rs-order
+        p: 0.8
+        en: "Are you ready to order?"
+        key: "お決まり (okimari) = decided"
+        heard: "\"gochuumon wa okimari desu ka\" → \"…okimari-ska\"."
+        say:
+          - {ja: "ご注文はお決まりですか", kana: "ご ちゅうもん は お きまり です か"}
+          - {ja: "ご注文お伺いします", kana: "ご ちゅうもん おうかがい します", en: "May I take your order?"}
+          - {ja: "お決まりになりましたらお呼びください", kana: "お きまり に なりましたら およびください", en: "Call me when you've decided"}
+        replies:
+          - {ja: "もう少し待ってください", kana: "もう すこし まって ください", en: "A little more time, please"}
+          - {ja: "おすすめは何ですか", kana: "おすすめ は なん です か", en: "What do you recommend?"}
+      - id: rs-ask
+        kind: you
+        en: "Ask: is this one good? Which one is the most popular?"
+        say:
+          - {ja: "これはおすすめですか", kana: "これ は おすすめ です か"}
+          - {ja: "一番人気はどれですか", kana: "いちばん にんき は どれ です か"}
+      - id: rs-reco
+        p: 0.5
+        en: "This is the most popular one"
+        key: "人気 (ninki) = popular; おすすめ (osusume) = recommended"
+        say:
+          - {ja: "こちらが一番人気です", kana: "こちら が いちばん にんき です"}
+          - {ja: "本日のおすすめはこちらです", kana: "ほんじつ の おすすめ は こちら です", en: "Today's special is this one"}
+          - {ja: "少し辛いですよ", kana: "すこし からい です よ", en: "It's a little spicy"}
+      - id: rs-last
+        p: 0.3
+        en: "It's last order. Anything else?"
+        key: "ラストオーダー (rasuto oodaa)"
+        say:
+          - {ja: "ラストオーダーになりますが、ご注文はよろしいですか", kana: "らすと おーだー に なります が、 ご ちゅうもん は よろしい です か"}
+        replies:
+          - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "We're fine"}
+          - {ja: "これもお願いします", kana: "これ も おねがい します", en: "This too, please"}
+      - id: rs-clear
+        p: 0.5
+        en: "May I take your plate?"
+        key: "お下げ (osage) = clearing away; お済み (osumi) = finished"
+        say:
+          - {ja: "お下げしてもよろしいですか", kana: "おさげ して も よろしい です か"}
+          - {ja: "こちらお済みですか", kana: "こちら おすみ です か", en: "Are you finished with this?"}
+          - {ja: "お皿お下げしますね", kana: "お さら おさげ します ね"}
+        replies:
+          - {ja: "はい、どうぞ", kana: "はい、 どうぞ", en: "Yes, go ahead"}
+          - {ja: "まだです", kana: "まだ です", en: "Not yet"}
+      - id: rs-check
+        p: 0.8
+        en: "Please pay at the register"
+        key: "お会計 (okaikei) = the bill; レジ (reji) = register"
+        say:
+          - {ja: "お会計はレジでお願いします", kana: "お かいけい は れじ で おねがい します"}
+          - {ja: "お会計はご一緒でよろしいですか", kana: "お かいけい は ご いっしょ で よろしい です か", en: "Paying together?"}
+          - {ja: "お会計は別々ですか", kana: "お かいけい は べつべつ です か", en: "Separate checks?"}
+        replies:
+          - {ja: "一緒で", kana: "いっしょ で", en: "Together"}
+          - {ja: "別々で", kana: "べつべつ で", en: "Separately"}
+      - id: rs-bye
+        en: "Thank you, come again"
+        say:
+          - {ja: "ありがとうございました、またお越しくださいませ", kana: "ありがとう ございました、 また おこし くださいませ"}
+          - {ja: "ありがとうございました", kana: "ありがとう ございました"}
+        replies:
+          - {ja: "ごちそうさまでした", kana: "ごちそうさま でした", en: "Thanks for the meal"}
+
+  # ── Ramen ────────────────────────────────────────────────────────────
+  - id: ramen
+    title: Ramen shop
+    blurb: Ticket machine first, then noodle firmness, richness, oil, garlic. Shouted over a kitchen.
+    steps:
+      - id: rm-greet
+        en: "Welcome!"
+        heard: "Shouted and clipped: \"rasshai!\" Every cook joins in."
+        say:
+          - {ja: "いらっしゃいませ", kana: "いらっしゃいませ"}
+          - {ja: "らっしゃい", kana: "らっしゃい"}
+      - id: rm-ticket
+        p: 0.8
+        en: "Buy a meal ticket first, please"
+        key: "食券 (shokken) = meal ticket"
+        say:
+          - {ja: "先に食券をお願いします", kana: "さき に しょっけん を おねがい します"}
+          - {ja: "食券を買ってからお座りください", kana: "しょっけん を かって から おすわり ください"}
+          - {ja: "食券お預かりします", kana: "しょっけん おあずかり します", en: "I'll take your ticket"}
+      - id: rm-firm
+        p: 0.7
+        en: "How firm do you want the noodles?"
+        key: "麺 (men) = noodles; 固さ (katasa) = firmness"
+        say:
+          - {ja: "麺の固さはどうしますか", kana: "めん の かたさ は どう します か"}
+          - {ja: "麺の固さ、普通でよろしいですか", kana: "めん の かたさ、 ふつう で よろしい です か", en: "Regular firmness OK?"}
+          - {ja: "麺の固さはいかがなさいますか", kana: "めん の かたさ は いかが なさい ます か"}
+        replies:
+          - {ja: "普通で", kana: "ふつう で", en: "Regular"}
+          - {ja: "固めで", kana: "かため で", en: "Firm"}
+          - {ja: "柔らかめで", kana: "やわらかめ で", en: "Soft"}
+      - id: rm-rich
+        p: 0.5
+        en: "How strong do you want the flavor?"
+        key: "味 (aji) = flavor; 濃さ (kosa) = strength; 油 (abura) = oil"
+        say:
+          - {ja: "味の濃さはどうしますか", kana: "あじ の こさ は どう します か"}
+          - {ja: "油の量はどうしますか", kana: "あぶら の りょう は どう します か", en: "How much oil?"}
+        replies:
+          - {ja: "普通で", kana: "ふつう で", en: "Regular"}
+          - {ja: "少なめで", kana: "すくなめ で", en: "Less"}
+          - {ja: "多めで", kana: "おおめ で", en: "More"}
+      - id: rm-garlic
+        p: 0.4
+        en: "Do you want garlic?"
+        key: "ニンニク (ninniku) = garlic"
+        say:
+          - {ja: "ニンニク入れますか", kana: "にんにく いれ ます か"}
+          - {ja: "トッピングはどうしますか", kana: "とっぴんぐ は どう します か", en: "Any toppings?"}
+        replies:
+          - {ja: "お願いします", kana: "おねがい します", en: "Yes, please"}
+          - {ja: "なしで", kana: "なし で", en: "None"}
+      - id: rm-refill
+        p: 0.3
+        en: "Would you like a noodle refill?"
+        key: "替え玉 (kaedama) = extra noodles; おかわり (okawari) = refill"
+        say:
+          - {ja: "替え玉いかがですか", kana: "かえだま いかが です か"}
+          - {ja: "ライスはおかわり自由です", kana: "らいす は おかわり じゆう です", en: "Rice refills are free"}
+        replies:
+          - {ja: "替え玉お願いします", kana: "かえだま おねがい します", en: "A refill, please"}
+          - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "I'm good"}
+      - id: rm-bye
+        en: "Thank you!"
+        say:
+          - {ja: "ありがとうございました", kana: "ありがとう ございました"}
+        replies:
+          - {ja: "ごちそうさまでした", kana: "ごちそうさま でした", en: "Thanks for the meal"}
+
+  # ── Shops & drugstores ───────────────────────────────────────────────
+  - id: shop
+    title: Shops & drugstores
+    blurb: Just looking, out of stock, tax-free, gift or for yourself, and the bag that costs extra.
+    steps:
+      - id: sh-greet
+        en: "Welcome, have a look around"
+        key: "ご覧ください (goran kudasai) = please look"
+        say:
+          - {ja: "いらっしゃいませ、どうぞご覧ください", kana: "いらっしゃいませ、 どうぞ ごらん ください"}
+          - {ja: "いらっしゃいませ", kana: "いらっしゃいませ"}
+      - id: sh-help
+        p: 0.6
+        en: "Are you looking for something?"
+        key: "お探し (osagashi) = searching"
+        say:
+          - {ja: "何かお探しですか", kana: "なにか おさがし です か"}
+          - {ja: "何かございましたらお声がけください", kana: "なにか ございましたら お こえがけ ください", en: "Let me know if you need anything"}
+        replies:
+          - {ja: "見ているだけです", kana: "みて いる だけ です", en: "Just looking"}
+          - {ja: "これはありますか", kana: "これ は あります か", en: "Do you have this? (show a photo)"}
+      - id: sh-stock
+        p: 0.3
+        en: "Sorry, we're out of stock"
+        key: "在庫 (zaiko) = stock; 切らして (kirashite) = run out"
+        say:
+          - {ja: "申し訳ございません、ただいま在庫を切らしております", kana: "もうしわけ ございません、 ただいま ざいこ を きらして おります"}
+          - {ja: "在庫を確認してきます", kana: "ざいこ を かくにん して きます", en: "I'll go check the stock"}
+      - id: sh-try
+        p: 0.3
+        en: "Would you like to try it on?"
+        key: "試着 (shichaku) = trying on"
+        say:
+          - {ja: "ご試着されますか", kana: "ご しちゃく され ます か"}
+          - {ja: "試着室はこちらです", kana: "しちゃくしつ は こちら です", en: "The fitting room is over here"}
+        replies:
+          - {ja: "はい、お願いします", kana: "はい、 おねがい します", en: "Yes, please"}
+          - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "No thanks"}
+      - id: sh-taxfree
+        p: 0.6
+        en: "Would you like it tax-free?"
+        key: "免税 (menzei) = tax-free; パスポート (pasupooto)"
+        say:
+          - {ja: "免税をご希望ですか", kana: "めんぜい を ごきぼう です か"}
+          - {ja: "パスポートはお持ちですか", kana: "ぱすぽーと は おもち です か", en: "Do you have your passport?"}
+          - {ja: "免税は5000円以上からになります", kana: "めんぜい は ごせん えん いじょう から に なります", en: "Tax-free starts at 5,000 yen", choices: ["Tax-free starts at 5,000 yen", "Tax-free starts at 500 yen", "Tax-free starts at 50,000 yen", "Tax-free is not available"]}
+        replies:
+          - {ja: "はい、お願いします", kana: "はい、 おねがい します", en: "Yes, please"}
+          - {ja: "パスポートです", kana: "ぱすぽーと です", en: "Here's my passport"}
+      - id: sh-gift
+        p: 0.3
+        en: "Is this a gift?"
+        key: "プレゼント用 (purezento-you) = for a gift; ご自宅用 (gojitaku-you) = for home"
+        say:
+          - {ja: "プレゼント用ですか", kana: "ぷれぜんと よう です か"}
+          - {ja: "ご自宅用でよろしいですか", kana: "ご じたく よう で よろしい です か", en: "For yourself (no gift wrap)?"}
+        replies:
+          - {ja: "自分用です", kana: "じぶん よう です", en: "It's for me"}
+          - {ja: "プレゼント用です", kana: "ぷれぜんと よう です", en: "It's a gift"}
+      - id: sh-bag
+        p: 0.5
+        en: "Bags cost extra. Is that OK?"
+        key: "有料 (yuuryou) = costs money; 紙袋 (kamibukuro) = paper bag"
+        say:
+          - {ja: "袋は有料ですがよろしいですか", kana: "ふくろ は ゆうりょう です が よろしい です か"}
+          - {ja: "紙袋にお入れしますか", kana: "かみぶくろ に おいれ します か", en: "Shall I put it in a paper bag?"}
+        replies:
+          - {ja: "はい、お願いします", kana: "はい、 おねがい します", en: "Yes, please"}
+          - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "No thanks"}
+      - id: sh-bye
+        en: "Thank you very much"
+        say:
+          - {ja: "ありがとうございました", kana: "ありがとう ございました"}
+          - {ja: "ありがとうございました、またお越しくださいませ", kana: "ありがとう ございました、 また おこし くださいませ"}
+
+  # ── Hotel ────────────────────────────────────────────────────────────
+  - id: hotel
+    title: Hotel front desk
+    blurb: Checking in, your name, the passport, the form, breakfast times, luggage.
+    steps:
+      - id: ht-checkin
+        en: "Welcome. Checking in?"
+        key: "チェックイン (chekkuin)"
+        say:
+          - {ja: "いらっしゃいませ、チェックインでしょうか", kana: "いらっしゃいませ、 ちぇっくいん でしょう か"}
+          - {ja: "チェックインですか", kana: "ちぇっくいん です か"}
+        replies:
+          - {ja: "はい、予約しています", kana: "はい、 よやく して います", en: "Yes, I have a reservation"}
+      - id: ht-name
+        en: "May I have your name?"
+        key: "お名前 (onamae) = your name"
+        say:
+          - {ja: "お名前をお伺いしてもよろしいですか", kana: "お なまえ を おうかがい して も よろしい です か"}
+          - {ja: "ご予約のお名前をお願いします", kana: "ご よやく の お なまえ を おねがい します"}
+      - id: ht-passport
+        p: 0.8
+        en: "May I see your passport?"
+        key: "拝見 (haiken) = (humbly) see"
+        say:
+          - {ja: "パスポートを拝見してもよろしいですか", kana: "ぱすぽーと を はいけん して も よろしい です か"}
+          - {ja: "パスポートのコピーを取らせていただきます", kana: "ぱすぽーと の こぴー を とらせて いただきます", en: "I'll make a copy of your passport"}
+      - id: ht-form
+        p: 0.6
+        en: "Please fill this out"
+        key: "ご記入 (gokinyuu) = filling in"
+        say:
+          - {ja: "こちらにご記入をお願いします", kana: "こちら に ごきにゅう を おねがい します"}
+          - {ja: "こちらにサインをお願いします", kana: "こちら に さいん を おねがい します", en: "Please sign here"}
+      - id: ht-breakfast
+        p: 0.6
+        en: "Breakfast is from 7 to 10, on the 2nd floor"
+        key: "朝食 (choushoku) = breakfast; 階 (kai) = floor"
+        say:
+          - {ja: "朝食は7時から10時まで、2階のレストランです", kana: "ちょうしょく は しちじ から じゅうじ まで、 にかい の れすとらん です", choices: ["Breakfast is 7–10, 2nd floor", "Breakfast is 7–10, 7th floor", "Breakfast is 2–10, 7th floor", "Check-out is at 10"]}
+          - {ja: "チェックアウトは11時です", kana: "ちぇっくあうと は じゅういちじ です", en: "Check-out is at 11", choices: ["Check-out is at 11", "Check-out is at 7", "Check-in is at 11", "Breakfast is at 11"]}
+      - id: ht-luggage
+        p: 0.4
+        en: "Shall I hold your luggage?"
+        key: "お荷物 (onimotsu) = luggage; お預かり (oazukari) = holding"
+        say:
+          - {ja: "お荷物お預かりしましょうか", kana: "お にもつ おあずかり しましょう か"}
+        replies:
+          - {ja: "お願いします", kana: "おねがい します", en: "Yes, please"}
+      - id: ht-key
+        en: "Here's your room key"
+        key: "鍵 (kagi) = key; お部屋 (oheya) = room"
+        say:
+          - {ja: "こちらがお部屋の鍵です", kana: "こちら が お へや の かぎ です"}
+          - {ja: "お部屋は5階の512号室です", kana: "お へや は ごかい の ごひゃく じゅうに ごうしつ です", en: "Your room is 512, on the 5th floor", choices: ["Room 512, 5th floor", "Room 521, 5th floor", "Room 512, 2nd floor", "Room 215, 5th floor"]}
+
+  # ── Your turn: chaining requests and lifelines ───────────────────────
+  - id: yours
+    title: Your turn
+    blurb: Chain what you want into one sentence, ask if something is good, and the lifelines for when you didn't catch it.
+    steps:
+      - {id: yt-chain, kind: you, en: "This, this, and also this, please.", say: [{ja: "これとこれと、あとこれもお願いします", kana: "これ と これ と、 あと これ も おねがい します"}]}
+      - {id: yt-two-one, kind: you, en: "Two of these and one of that, please.", say: [{ja: "これを二つと、それを一つください", kana: "これ を ふたつ と、 それ を ひとつ ください"}]}
+      - {id: yt-nobag, kind: you, en: "No need to heat it. Just a bag, please.", say: [{ja: "温めはいいです。袋だけお願いします", kana: "あたため は いい です。 ふくろ だけ おねがい します"}]}
+      - {id: yt-hashi-bag, kind: you, en: "Two pairs of chopsticks and a bag, please.", say: [{ja: "お箸を二膳と、袋をお願いします", kana: "お はし を にぜん と、 ふくろ を おねがい します"}]}
+      - {id: yt-cafe, kind: you, en: "For here. An iced coffee, medium, please.", say: [{ja: "店内で。アイスコーヒーのMサイズをお願いします", kana: "てんない で。 あいす こーひー の えむ さいず を おねがい します"}]}
+      - {id: yt-good, kind: you, en: "Is this one good? (do you recommend it?)", say: [{ja: "これはおすすめですか", kana: "これ は おすすめ です か"}]}
+      - {id: yt-popular, kind: you, en: "Which one is the most popular?", say: [{ja: "一番人気はどれですか", kana: "いちばん にんき は どれ です か"}]}
+      - {id: yt-spicy, kind: you, en: "Is this spicy?", say: [{ja: "これは辛いですか", kana: "これ は からい です か"}]}
+      - {id: yt-same, kind: you, en: "One more of the same, please.", say: [{ja: "同じものをもう一つください", kana: "おなじ もの を もう ひとつ ください"}]}
+      - {id: yt-decide, kind: you, en: "I'll take this one.", say: [{ja: "これにします", kana: "これ に します"}]}
+      - {id: yt-smaller, kind: you, en: "Do you have a smaller size?", say: [{ja: "小さいサイズはありますか", kana: "ちいさい さいず は あります か"}]}
+      - {id: yt-again, kind: you, en: "Lifeline: one more time, please.", say: [{ja: "もう一回お願いします", kana: "もう いっかい おねがい します"}]}
+      - {id: yt-slow, kind: you, en: "Lifeline: could you say it slowly?", say: [{ja: "ゆっくり言ってもらえますか", kana: "ゆっくり いって もらえ ます か"}]}
+      - {id: yt-missed, kind: you, en: "Lifeline: sorry, I didn't catch that.", say: [{ja: "すみません、聞き取れませんでした", kana: "すみません、 ききとれ ません でした"}]}
+      - {id: yt-english, kind: you, en: "Lifeline: is English OK?", say: [{ja: "英語でも大丈夫ですか", kana: "えいご でも だいじょうぶ です か"}]}
