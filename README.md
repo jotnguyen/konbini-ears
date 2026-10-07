@@ -2,6 +2,10 @@
 
 Listening drills for the things shop staff say to you, at the speed they actually say it.
 
+**Try it:** https://jotnguyen.github.io/konbini-ears/ (open it on your phone, then Share → Add to
+Home Screen and it works offline). The Anki deck is at
+https://jotnguyen.github.io/konbini-ears/konbini-ears.apkg.
+
 Phrasebooks teach you what to *say*. When you're traveling, the hard part is usually the other
 direction: the cashier asks something fast, and you freeze. Service talk is a small, closed world,
 though. A konbini checkout is the same eight questions every time (point card, bag, heat it up,
