@@ -446,7 +446,12 @@ details summary { cursor: pointer; font-weight: 600; padding: 4px 0; }
     wireSeg("voice", v => { S.voice = v; save(); });
     wireSeg("theme", v => { S.theme = v; save(); applyTheme(); });
     $("test").onclick = e => { const v = variantById["kb-greet.0"] || Object.values(variantById)[0]; play(clipFor(v, chooseVoice(v)), 1, e.currentTarget); };
-    $("reset").onclick = () => { if (confirm("Clear your scores and misses on this device?")) { S.miss = {}; S.scenes = {}; save(); settings(); } };
+    // Two taps instead of confirm(): sandboxed viewers silently refuse dialogs.
+    $("reset").onclick = e => {
+      const b = e.currentTarget;
+      if (!b.dataset.armed) { b.dataset.armed = "1"; b.textContent = "Tap again to clear scores and misses"; return; }
+      S.miss = {}; S.scenes = {}; save(); settings(); toast("Progress cleared.");
+    };
   }
 
   setTab("home");
