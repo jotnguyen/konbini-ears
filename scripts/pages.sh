@@ -6,7 +6,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 PACK=${1:-ja-service}
 SRC=$PWD
-TMP=$(mktemp -d)
+TMP=$(mktemp -d)/site     # git worktree wants a path that does not exist yet
 trap 'git -C "$SRC" worktree remove --force "$TMP" 2>/dev/null || true' EXIT
 
 git fetch -q origin gh-pages 2>/dev/null || true
