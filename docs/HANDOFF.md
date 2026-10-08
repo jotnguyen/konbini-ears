@@ -53,20 +53,17 @@ lines that will be spoken from kana.
 
 ## Open items, in order
 
-1. **[human] Try it on the iPhone 8.** Open the URL, tap Share → Add to Home Screen, then turn on
-   airplane mode and reopen it to prove offline works. Also: does audio play with the silent switch
-   on? Does 1.5× sound natural?
-2. **[human] Collect misses from real encounters.** Write down fragments of what staff said that
-   the pack doesn't cover. Each one becomes a step or a variant.
-3. **[agent] Fold the trip back in after 10-16.** Add the phrases that actually came up, and drop
-   any scene that never did.
-4. **[agent, optional] Better voices.** Kokoro is cleaner than a real cashier. Options: re-record
+Scope is phrases to get by (see `docs/DECISIONS.md`, D2). The next piece of work is
+**[`docs/tickets/KE-001-after-the-trip.md`](tickets/KE-001-after-the-trip.md)**: test on the iPhone 8, then fold
+the trip notes into the pack. The items below are smaller or optional.
+
+1. **[agent, optional] Better voices.** Kokoro is cleaner than a real cashier. Options: re-record
    with `jf_gongitsune`/`jf_nezumi` for variety, try VOICEVOX (check that it has an arm64 build), or
    add the owner's own recordings. A recording would be one more audio key per line in the
    manifest.
-5. **[agent, optional] A CI lint job:** `python -m ears check` without the reading check, so no
+2. **[agent, optional] A CI lint job:** `python -m ears check` without the reading check, so no
    2 GB image is needed in CI.
-6. **[idea] The "didn't catch it" loop.** Type a half-heard fragment, an LLM reconstructs the
+3. **[parked, D7] The "didn't catch it" loop.** Type a half-heard fragment, an LLM reconstructs the
    phrase, and it joins the pack. It needs an API key and a server; build it only if the app gets
    daily use. It could also be a product hook (see the README).
 
