@@ -6,6 +6,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Konbini Ears">
 <meta name="theme-color" content="#0f7a5c">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <title>Konbini Ears</title>
 <style>
 :root {
@@ -214,8 +216,12 @@ details summary { cursor: pointer; font-weight: 600; padding: 4px 0; }
   function choicesFor(v) {
     if (v.choices) return { right: v.choices[0], list: shuffle(v.choices) };
     const right = v.en || v.step.en;
-    const pool = steps => steps.flatMap(st => [st.en, ...st.say.map(x => x.en).filter(Boolean)]);
-    const same = shuffle(pool(v.step.scene.steps.filter(st => st.kind !== "you" && st !== v.step)));
+    // A step that shares any line with this one (いらっしゃいませ in every scene) could also be
+    // "right", so it never supplies a wrong answer.
+    const mine = new Set(v.step.say.map(x => x.ja));
+    const fair = st => st.kind !== "you" && st !== v.step && !st.say.some(x => mine.has(x.ja));
+    const pool = steps => steps.filter(fair).flatMap(st => [st.en, ...st.say.map(x => x.en).filter(Boolean)]);
+    const same = shuffle(pool(v.step.scene.steps));
     const other = shuffle(pool(staffSteps.filter(st => st.scene !== v.step.scene)));
     const out = [right];
     for (const e of [...same.slice(0, 2), ...other, ...same.slice(2)]) { if (out.length >= 4) break; if (!out.includes(e)) out.push(e); }

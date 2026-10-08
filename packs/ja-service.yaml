@@ -36,8 +36,9 @@ scenes:
     blurb: Point card, bag, heating, chopsticks, paying. The same eight questions every time, asked fast.
     steps:
       - id: kb-greet
-        en: "Welcome! (no reply needed)"
+        en: "Welcome!"
         heard: "Often just the tail: \"…shaimase!\" shouted from the back."
+        note: "No reply needed. A nod is plenty."
         say:
           - {ja: "いらっしゃいませ", kana: "いらっしゃいませ"}
           - {ja: "いらっしゃいませ、こんにちは", kana: "いらっしゃいませ、 こんにちは"}
@@ -58,6 +59,7 @@ scenes:
           - {ja: "ポイントカードはお持ちですか", kana: "ぽいんとかーど は おもち です か"}
           - {ja: "ポイントカードございますか", kana: "ぽいんとかーど ございます か"}
           - {ja: "ポイントカードお持ちでしょうか", kana: "ぽいんとかーど おもち でしょう か"}
+          - {ja: "ポイントカードかアプリはお持ちですか", kana: "ぽいんとかーど か あぷり は おもち です か", en: "Do you have a point card or the app?"}
         replies:
           - {ja: "持ってないです", kana: "もって ない です", en: "I don't have one"}
           - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "No thanks (the all-purpose polite no)"}
@@ -121,10 +123,10 @@ scenes:
           - {ja: "一緒で大丈夫です", kana: "いっしょ で だいじょうぶ です", en: "Together is fine"}
       - id: kb-age
         p: 0.2
-        en: "Please tap the screen (age check for alcohol)"
+        en: "Please tap the screen to confirm your age (alcohol, tobacco)"
         key: "画面 (gamen) = screen; 年齢確認 (nenrei kakunin) = age check"
         say:
-          - {ja: "画面のタッチをお願いします", kana: "がめん の たっち を おねがい します"}
+          - {ja: "年齢確認のため、画面のタッチをお願いします", kana: "ねんれい かくにん の ため、 がめん の たっち を おねがい します"}
           - {ja: "年齢確認のボタンをお願いします", kana: "ねんれい かくにん の ぼたん を おねがい します"}
         note: "Tap はい on the customer screen. No reply needed."
       - id: kb-total
@@ -146,6 +148,8 @@ scenes:
           - {ja: "お支払い方法はどうされますか", kana: "お しはらい ほうほう は どう され ます か"}
           - {ja: "お支払いはいかがなさいますか", kana: "お しはらい は いかが なさい ます か"}
           - {ja: "お支払いは", kana: "お しはらい は"}
+          - {ja: "お支払い方法を画面でお選びください", kana: "お しはらい ほうほう を がめん で お えらび ください", en: "Please choose how you'll pay on the screen"}
+          - {ja: "お支払いはあちらの機械でお願いします", kana: "お しはらい は あちら の きかい で おねがい します", en: "Please pay at that machine over there"}
         replies:
           - {ja: "カードでお願いします", kana: "かーど で おねがい します", en: "By card, please"}
           - {ja: "現金で", kana: "げんきん で", en: "Cash"}
@@ -153,7 +157,7 @@ scenes:
       - id: kb-terminal
         p: 0.4
         en: "Tap your card or phone on the reader"
-        key: "タッチ (tacchi) = tap; 挿して (sashite) = insert"
+        key: "タッチ (tacchi) = tap; 差して (sashite) = insert"
         say:
           - {ja: "こちらにタッチをお願いします", kana: "こちら に たっち を おねがい します"}
           - {ja: "カードをお差しください", kana: "かーど を おさし ください", en: "Please insert your card"}
@@ -163,6 +167,7 @@ scenes:
         en: "Here's your change"
         key: "お預かり (oazukari) = I'm taking your money; お返し (okaeshi) = change back"
         say:
+          - {ja: "1000円からお預かりします", kana: "せん えん から おあずかり します", en: "I'll take your 1,000 yen"}
           - {ja: "1000円お預かりします", kana: "せん えん おあずかり します", en: "I'll take your 1,000 yen"}
           - {ja: "158円のお返しです", kana: "ひゃく ごじゅう はち えん の おかえし です", en: "Your change is 158 yen", choices: ["Your change is 158 yen", "Your change is 185 yen", "Your total is 158 yen", "Your change is 1,058 yen"]}
           - {ja: "お先に大きい方、2000円のお返しです", kana: "お さき に おおきい ほう、 にせん えん の おかえし です", en: "First the bills: 2,000 yen back"}
@@ -172,17 +177,18 @@ scenes:
         key: "レシート (reshiito) = receipt"
         say:
           - {ja: "レシートはご入用ですか", kana: "れしーと は ごいりよう です か"}
-          - {ja: "レシートはよろしいですか", kana: "れしーと は よろしい です か"}
-          - {ja: "レシートお使いですか", kana: "れしーと おつかい です か"}
+          - {ja: "レシートはよろしいですか", kana: "れしーと は よろしい です か", en: "You don't need the receipt, right?"}
+          - {ja: "レシートご利用ですか", kana: "れしーと ごりよう です か"}
         replies:
-          - {ja: "はい、ください", kana: "はい、 ください", en: "Yes, please"}
+          - {ja: "レシートください", kana: "れしーと ください", en: "The receipt, please"}
           - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "No thanks"}
+        note: "Trap: レシートはよろしいですか means \"you're fine without it?\", so はい means NO receipt. Saying レシートください always works."
       - id: kb-bye
-        en: "Thank you! (come again)"
+        en: "Thank you!"
         heard: "\"arigatou gozaimashita\" → \"…zaimashta!\""
         say:
           - {ja: "ありがとうございました", kana: "ありがとう ございました"}
-          - {ja: "ありがとうございました、またお越しくださいませ", kana: "ありがとう ございました、 また おこし くださいませ"}
+          - {ja: "ありがとうございました、またお越しくださいませ", kana: "ありがとう ございました、 また おこし くださいませ", en: "Thank you, please come again"}
 
   # ── Counter: fast food and cafés ─────────────────────────────────────
   - id: counter
@@ -194,7 +200,7 @@ scenes:
         key: "ご注文 (gochuumon) = order"
         say:
           - {ja: "いらっしゃいませ、ご注文をどうぞ", kana: "いらっしゃいませ、 ご ちゅうもん を どうぞ"}
-          - {ja: "お決まりでしたらどうぞ", kana: "お きまり でしたら どうぞ", en: "Whenever you're ready, go ahead"}
+          - {ja: "お決まりでしたらお伺いします", kana: "お きまり でしたら おうかがい します", en: "I'll take your order when you're ready"}
       - id: ct-eatin
         en: "For here or to go?"
         key: "店内 (tennai) = in the shop; お持ち帰り (omochikaeri) = take-out; お召し上がり (omeshiagari) = eating"
@@ -226,13 +232,13 @@ scenes:
           - {ja: "単品で", kana: "たんぴん で", en: "Just the item"}
       - id: ct-drink
         p: 0.6
-        en: "Would you like a drink with that?"
+        en: "Would you like to add a drink?"
         key: "お飲み物 (onomimono) = drink; ご一緒に (goissho ni) = together with"
         heard: "\"goissho ni onomimono wa ikaga desu ka\" → \"…onomimono ikaga-ska\"."
         say:
           - {ja: "ご一緒にお飲み物はいかがですか", kana: "ご いっしょ に お のみもの は いかが です か"}
-          - {ja: "お飲み物は何になさいますか", kana: "お のみもの は なに に なさい ます か", en: "What would you like to drink?"}
-          - {ja: "ドリンクはどうされますか", kana: "どりんく は どう され ます か", en: "What about a drink?"}
+          - {ja: "お飲み物は何になさいますか", kana: "お のみもの は なに に なさい ます か", en: "Which drink would you like with the set?"}
+          - {ja: "ドリンクはどうされますか", kana: "どりんく は どう され ます か", en: "Which drink would you like with the set?"}
         replies:
           - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "No thanks"}
           - {ja: "ウーロン茶で", kana: "うーろんちゃ で", en: "Oolong tea"}
@@ -292,20 +298,20 @@ scenes:
           - {ja: "いらっしゃいませ、何名様ですか", kana: "いらっしゃいませ、 なんめいさま です か"}
           - {ja: "何名様でしょうか", kana: "なんめいさま でしょう か"}
           - {ja: "お一人様ですか", kana: "お ひとりさま です か", en: "Just one person?"}
+          - {ja: "ご予約はされていますか", kana: "ご よやく は されて います か", en: "Do you have a reservation?"}
         replies:
           - {ja: "一人です", kana: "ひとり です", en: "One person"}
           - {ja: "二人です", kana: "ふたり です", en: "Two people"}
       - id: rs-smoke
-        p: 0.2
-        en: "Smoking or non-smoking?"
-        key: "タバコ (tabako) = smoking; 禁煙 (kin'en) = non-smoking"
+        p: 0.1
+        en: "Do you smoke?"
+        key: "タバコ (tabako) = cigarettes; 吸う (suu) = smoke; 禁煙 (kin'en) = non-smoking"
         say:
           - {ja: "おタバコは吸われますか", kana: "お たばこ は すわれ ます か"}
-          - {ja: "喫煙席と禁煙席、どちらがよろしいですか", kana: "きつえんせき と きんえんせき、 どちら が よろしい です か"}
+          - {ja: "店内は全席禁煙となっております", kana: "てんない は ぜんせき きんえん と なって おります", en: "The whole place is non-smoking"}
         replies:
-          - {ja: "吸いません", kana: "すいません", en: "I don't smoke"}
-          - {ja: "禁煙席で", kana: "きんえんせき で", en: "Non-smoking"}
-        note: "吸いません (suimasen, I don't smoke) sounds almost like すみません (sumimasen). Context saves you."
+          - {ja: "吸わないです", kana: "すわない です", en: "I don't smoke"}
+        note: "Since 2020 most restaurants are non-smoking inside. Say 吸わないです: 吸いません sounds just like すいません (excuse me)."
       - id: rs-wait
         p: 0.3
         en: "We're full. Can you wait?"
@@ -315,7 +321,7 @@ scenes:
           - {ja: "お名前を書いてお待ちください", kana: "お なまえ を かいて おまち ください", en: "Write your name and wait, please"}
         replies:
           - {ja: "はい、待ちます", kana: "はい、 まちます", en: "Yes, I'll wait"}
-          - {ja: "どのくらいですか", kana: "どの くらい です か", en: "About how long?"}
+          - {ja: "どのくらい待ちますか", kana: "どの くらい まち ます か", en: "About how long is the wait?"}
       - id: rs-seat
         p: 0.8
         en: "I'll show you to your seat"
@@ -324,6 +330,7 @@ scenes:
           - {ja: "お席へご案内します", kana: "お せき へ ごあんない します"}
           - {ja: "こちらへどうぞ", kana: "こちら へ どうぞ", en: "This way, please"}
           - {ja: "カウンター席でもよろしいですか", kana: "かうんたーせき でも よろしい です か", en: "Is the counter OK?"}
+          - {ja: "お水はセルフサービスです", kana: "お みず は せるふ さーびす です", en: "Water is self-service"}
         replies:
           - {ja: "はい、大丈夫です", kana: "はい、 だいじょうぶ です", en: "Yes, that's fine"}
       - id: rs-qr
@@ -343,6 +350,13 @@ scenes:
         replies:
           - {ja: "生ビールをお願いします", kana: "なまびーる を おねがい します", en: "A draft beer, please"}
           - {ja: "お水で大丈夫です", kana: "お みず で だいじょうぶ です", en: "Water is fine"}
+      - id: rs-otoshi
+        p: 0.4
+        en: "This is your otōshi (a small starter that comes with the table charge)"
+        key: "お通し (otooshi) = the starter you didn't order"
+        say:
+          - {ja: "こちらお通しです", kana: "こちら おとおし です"}
+        note: "Izakaya serve it automatically and add a few hundred yen per person. It's normal, not a mistake."
       - id: rs-order
         p: 0.8
         en: "Are you ready to order?"
@@ -353,7 +367,7 @@ scenes:
           - {ja: "ご注文お伺いします", kana: "ご ちゅうもん おうかがい します", en: "May I take your order?"}
           - {ja: "お決まりになりましたらお呼びください", kana: "お きまり に なりましたら およびください", en: "Call me when you've decided"}
         replies:
-          - {ja: "もう少し待ってください", kana: "もう すこし まって ください", en: "A little more time, please"}
+          - {ja: "もう少し待ってもらえますか", kana: "もう すこし まって もらえ ます か", en: "Could I have a little more time?"}
           - {ja: "おすすめは何ですか", kana: "おすすめ は なん です か", en: "What do you recommend?"}
       - id: rs-ask
         kind: you
@@ -401,9 +415,9 @@ scenes:
           - {ja: "一緒で", kana: "いっしょ で", en: "Together"}
           - {ja: "別々で", kana: "べつべつ で", en: "Separately"}
       - id: rs-bye
-        en: "Thank you, come again"
+        en: "Thank you!"
         say:
-          - {ja: "ありがとうございました、またお越しくださいませ", kana: "ありがとう ございました、 また おこし くださいませ"}
+          - {ja: "ありがとうございました、またお越しくださいませ", kana: "ありがとう ございました、 また おこし くださいませ", en: "Thank you, please come again"}
           - {ja: "ありがとうございました", kana: "ありがとう ございました"}
         replies:
           - {ja: "ごちそうさまでした", kana: "ごちそうさま でした", en: "Thanks for the meal"}
@@ -435,6 +449,7 @@ scenes:
           - {ja: "麺の固さはどうしますか", kana: "めん の かたさ は どう します か"}
           - {ja: "麺の固さ、普通でよろしいですか", kana: "めん の かたさ、 ふつう で よろしい です か", en: "Regular firmness OK?"}
           - {ja: "麺の固さはいかがなさいますか", kana: "めん の かたさ は いかが なさい ます か"}
+          - {ja: "お好みはございますか", kana: "お このみ は ございます か", en: "Any preferences? (firmness, richness, oil)"}
         replies:
           - {ja: "普通で", kana: "ふつう で", en: "Regular"}
           - {ja: "固めで", kana: "かため で", en: "Firm"}
@@ -448,8 +463,9 @@ scenes:
           - {ja: "油の量はどうしますか", kana: "あぶら の りょう は どう します か", en: "How much oil?"}
         replies:
           - {ja: "普通で", kana: "ふつう で", en: "Regular"}
-          - {ja: "少なめで", kana: "すくなめ で", en: "Less"}
-          - {ja: "多めで", kana: "おおめ で", en: "More"}
+          - {ja: "薄めで", kana: "うすめ で", en: "Lighter"}
+          - {ja: "濃いめで", kana: "こいめ で", en: "Stronger"}
+          - {ja: "油少なめで", kana: "あぶら すくなめ で", en: "Less oil"}
       - id: rm-garlic
         p: 0.4
         en: "Do you want garlic?"
@@ -462,14 +478,22 @@ scenes:
           - {ja: "なしで", kana: "なし で", en: "None"}
       - id: rm-refill
         p: 0.3
-        en: "Would you like a noodle refill?"
+        en: "A noodle refill? How firm?"
         key: "替え玉 (kaedama) = extra noodles; おかわり (okawari) = refill"
         say:
-          - {ja: "替え玉いかがですか", kana: "かえだま いかが です か"}
+          - {ja: "替え玉ですね、固さはどうしますか", kana: "かえだま です ね、 かたさ は どう します か"}
           - {ja: "ライスはおかわり自由です", kana: "らいす は おかわり じゆう です", en: "Rice refills are free"}
         replies:
-          - {ja: "替え玉お願いします", kana: "かえだま おねがい します", en: "A refill, please"}
-          - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "I'm good"}
+          - {ja: "普通で", kana: "ふつう で", en: "Regular"}
+          - {ja: "固めで", kana: "かため で", en: "Firm"}
+        note: "Staff rarely offer a refill. You call out 替え玉ください (kaedama kudasai), and they confirm."
+      - id: rm-serve
+        p: 0.6
+        en: "Here's your order. It's hot, careful."
+        key: "お待たせしました (omatase shimashita) = sorry to keep you waiting; 熱い (atsui) = hot"
+        say:
+          - {ja: "お待たせしました、熱いのでお気をつけください", kana: "おまたせ しました、 あつい ので お きをつけ ください"}
+          - {ja: "お待たせしました", kana: "おまたせ しました", en: "Here's your order (sorry for the wait)"}
       - id: rm-bye
         en: "Thank you!"
         say:
@@ -487,7 +511,7 @@ scenes:
         key: "ご覧ください (goran kudasai) = please look"
         say:
           - {ja: "いらっしゃいませ、どうぞご覧ください", kana: "いらっしゃいませ、 どうぞ ごらん ください"}
-          - {ja: "いらっしゃいませ", kana: "いらっしゃいませ"}
+          - {ja: "いらっしゃいませ", kana: "いらっしゃいませ", en: "Welcome!"}
       - id: sh-help
         p: 0.6
         en: "Are you looking for something?"
@@ -510,7 +534,7 @@ scenes:
         en: "Would you like to try it on?"
         key: "試着 (shichaku) = trying on"
         say:
-          - {ja: "ご試着されますか", kana: "ご しちゃく され ます か"}
+          - {ja: "ご試着なさいますか", kana: "ご しちゃく なさい ます か"}
           - {ja: "試着室はこちらです", kana: "しちゃくしつ は こちら です", en: "The fitting room is over here"}
         replies:
           - {ja: "はい、お願いします", kana: "はい、 おねがい します", en: "Yes, please"}
@@ -521,11 +545,13 @@ scenes:
         key: "免税 (menzei) = tax-free; パスポート (pasupooto)"
         say:
           - {ja: "免税をご希望ですか", kana: "めんぜい を ごきぼう です か"}
-          - {ja: "パスポートはお持ちですか", kana: "ぱすぽーと は おもち です か", en: "Do you have your passport?"}
+          - {ja: "パスポートはお持ちですか", kana: "ぱすぽーと は おもち です か", en: "Do you have your passport? (for tax-free)"}
+          - {ja: "お支払い回数は一括でよろしいですか", kana: "お しはらい かいすう は いっかつ で よろしい です か", en: "Paying in one go (no installments)?"}
           - {ja: "免税は5000円以上からになります", kana: "めんぜい は ごせん えん いじょう から に なります", en: "Tax-free starts at 5,000 yen", choices: ["Tax-free starts at 5,000 yen", "Tax-free starts at 500 yen", "Tax-free starts at 50,000 yen", "Tax-free is not available"]}
         replies:
           - {ja: "はい、お願いします", kana: "はい、 おねがい します", en: "Yes, please"}
           - {ja: "パスポートです", kana: "ぱすぽーと です", en: "Here's my passport"}
+        note: "From 1 Nov 2026 tax-free becomes a refund: you pay the tax at the till and get it back at airport customs. Keep the receipt and the goods unopened. For 一括 (one payment), just say はい."
       - id: sh-gift
         p: 0.3
         en: "Is this a gift?"
@@ -538,19 +564,20 @@ scenes:
           - {ja: "プレゼント用です", kana: "ぷれぜんと よう です", en: "It's a gift"}
       - id: sh-bag
         p: 0.5
-        en: "Bags cost extra. Is that OK?"
+        en: "Bags cost extra. Is that OK? (asks you to agree to pay)"
         key: "有料 (yuuryou) = costs money; 紙袋 (kamibukuro) = paper bag"
         say:
           - {ja: "袋は有料ですがよろしいですか", kana: "ふくろ は ゆうりょう です が よろしい です か"}
           - {ja: "紙袋にお入れしますか", kana: "かみぶくろ に おいれ します か", en: "Shall I put it in a paper bag?"}
         replies:
           - {ja: "はい、お願いします", kana: "はい、 おねがい します", en: "Yes, please"}
-          - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "No thanks"}
+          - {ja: "袋はいらないです", kana: "ふくろ は いらない です", en: "No bag, thanks"}
+        note: "大丈夫です is risky here: after \"is that OK?\" it can mean \"fine, I'll pay\". 袋はいらないです is clear."
       - id: sh-bye
-        en: "Thank you very much"
+        en: "Thank you!"
         say:
           - {ja: "ありがとうございました", kana: "ありがとう ございました"}
-          - {ja: "ありがとうございました、またお越しくださいませ", kana: "ありがとう ございました、 また おこし くださいませ"}
+          - {ja: "ありがとうございました、またお越しくださいませ", kana: "ありがとう ございました、 また おこし くださいませ", en: "Thank you, please come again"}
 
   # ── Hotel ────────────────────────────────────────────────────────────
   - id: hotel
@@ -573,7 +600,7 @@ scenes:
           - {ja: "ご予約のお名前をお願いします", kana: "ご よやく の お なまえ を おねがい します"}
       - id: ht-passport
         p: 0.8
-        en: "May I see your passport?"
+        en: "May I see your passport? (hotel check-in)"
         key: "拝見 (haiken) = (humbly) see"
         say:
           - {ja: "パスポートを拝見してもよろしいですか", kana: "ぱすぽーと を はいけん して も よろしい です か"}
@@ -592,6 +619,7 @@ scenes:
         say:
           - {ja: "朝食は7時から10時まで、2階のレストランです", kana: "ちょうしょく は しちじ から じゅうじ まで、 にかい の れすとらん です", choices: ["Breakfast is 7–10, 2nd floor", "Breakfast is 7–10, 7th floor", "Breakfast is 2–10, 7th floor", "Check-out is at 10"]}
           - {ja: "チェックアウトは11時です", kana: "ちぇっくあうと は じゅういちじ です", en: "Check-out is at 11", choices: ["Check-out is at 11", "Check-out is at 7", "Check-in is at 11", "Breakfast is at 11"]}
+          - {ja: "チェックインは15時からになります", kana: "ちぇっくいん は じゅうごじ から に なります", en: "Check-in is from 3 p.m.", choices: ["Check-in is from 3 p.m.", "Check-in is from 5 p.m.", "Check-out is at 3 p.m.", "Check-in is from 1 p.m."]}
       - id: ht-luggage
         p: 0.4
         en: "Shall I hold your luggage?"

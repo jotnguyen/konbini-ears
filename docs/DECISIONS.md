@@ -80,3 +80,17 @@ fragment, an LLM reconstructs the phrase, and it joins your drills with audio. T
 key and a server, which goes against D4.
 
 **Revisit if:** the owner uses the app daily and keeps wishing for that loop.
+
+## D8 — Steps that share a line never supply each other's wrong answers (2026-10-09)
+
+**Decision:** When the app builds answer choices, it skips any step that shares a Japanese line
+with the current step. Meanings across scenes are also worded to be distinct, for example
+"(for tax-free)" vs "(hotel check-in)".
+
+**Why:** The adversarial review (`docs/reviews/2026-10-09-japanese-pack.md`) found that plain
+いらっしゃいませ and ありがとうございました appear in several scenes with different English meanings.
+A learner who heard them right could be shown two correct-sounding choices and be marked wrong,
+which teaches distrust instead of Japanese.
+
+**Revisit if:** a pack needs cross-scene lines that are deliberately confusable. Add an explicit
+group field rather than dropping the rule.

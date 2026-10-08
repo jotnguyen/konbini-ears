@@ -16,7 +16,8 @@ else
   git worktree add -q --orphan -b gh-pages "$TMP"
 fi
 cp "dist/konbini-ears-$PACK.html" "$TMP/index.html"
-cp web/sw.js "$TMP/sw.js"
+cp web/sw.js web/manifest.webmanifest "$TMP/"
+mkdir -p "$TMP/icons" && cp web/icons/* "$TMP/icons/"
 cp "dist/konbini-ears-$PACK.apkg" "$TMP/konbini-ears.apkg"
 touch "$TMP/.nojekyll"
 cd "$TMP"
