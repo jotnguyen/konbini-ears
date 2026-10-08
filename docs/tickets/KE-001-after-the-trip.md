@@ -70,3 +70,6 @@ previous site. Cached clips are kept, so a rollback records nothing new.
 
 - **2026-10-08** — Opened at the end of the first build session. The owner likes the app as it is
   and wants it kept to getting-by phrases (D2).
+- **2026-10-09** — The owner installed it on the iPhone 8 home screen, and it works. The pack was
+  revised after an adversarial review (`docs/reviews/2026-10-09-japanese-pack.md`), which added 8
+  high-frequency lines. Step 1 now only needs the offline check with airplane mode on.

@@ -4,11 +4,12 @@ _Last updated: 2026-10-08. The owner is in Japan until 2026-10-16 and uses the a
 
 ## State now
 
-- **Live:** https://jotnguyen.github.io/konbini-ears/ is the `gh-pages` branch, holding `index.html`,
+- **Live:** https://jotnguyen.github.io/konbini-ears/ is the `gh-pages` branch, holding `index.html`, `manifest.webmanifest`, `icons/`,
   `sw.js` and `konbini-ears.apkg`. It was checked at phone size in a desktop browser on 2026-10-07:
-  the page loads, audio plays, all 336 clips decode, and the service worker cached the page. **Nobody
+  the page loads, audio plays, all 336 clips decode, and the service worker cached the page. The owner installed it on the iPhone 8 home screen on 2026-10-08 and it works. **Nobody
   has tried it on the real iPhone 8 yet.**
-- **Pack:** `packs/ja-service.yaml` has 7 scenes, 74 steps, 140 staff lines, 18 your-turn lines and
+- **Pack:** `packs/ja-service.yaml` has 7 scenes and 76 steps, 360 clips in all. It was revised on 2026-10-09 after an
+  adversarial review (`docs/reviews/2026-10-09-japanese-pack.md`). Before that it had 140 staff lines, 18 your-turn lines and
   55 replies. Staff lines are recorded in `jf_alpha` and `jm_kumo` at speed 1.0, your lines in
   `jm_kumo`. 14 lines are spoken from kana because OpenJTalk misreads their kanji; the full list is
   in `dist/report-ja-service.json`.
