@@ -1,0 +1,16 @@
+{
+  "name": "Konbini Ears",
+  "short_name": "Konbini Ears",
+  "description": "Listening drills for what Japanese shop staff say, at real speed.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#121418",
+  "theme_color": "#0f7a5c",
+  "lang": "en",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
