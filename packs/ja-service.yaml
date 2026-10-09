@@ -1,4 +1,4 @@
-# Konbini Ears — Japanese service-encounter pack.
+# Konbini Ears — Japanese pack: service encounters, getting around, and small talk.
 #
 # A pack is a list of scenes. A scene is an ordered list of steps; a drill run walks the steps in
 # order, keeps each one with probability `p`, and picks one variant at random, in a random voice.
@@ -20,7 +20,7 @@
 
 lang: ja
 title: Konbini Ears
-subtitle: Hear what Japanese staff say, at full speed, and answer without freezing.
+subtitle: Hear what people in Japan say to you, at full speed, and answer without freezing.
 
 # Kokoro voices (speech-kit). Staff lines are recorded in every staff voice; your lines in one.
 voices:
@@ -634,6 +634,489 @@ scenes:
         say:
           - {ja: "こちらがお部屋の鍵です", kana: "こちら が お へや の かぎ です"}
           - {ja: "お部屋は5階の512号室です", kana: "お へや は ごかい の ごひゃく じゅうに ごうしつ です", en: "Your room is 512, on the 5th floor", choices: ["Room 512, 5th floor", "Room 521, 5th floor", "Room 512, 2nd floor", "Room 215, 5th floor"]}
+
+  # ── Train station ────────────────────────────────────────────────────
+  - id: station
+    title: Train station
+    blurb: Platform announcements, where the train is going, the gate that beeps, and the ticket window.
+    steps:
+      - id: st-arrive
+        en: "A train is arriving soon"
+        key: "まもなく (mamonaku) = shortly; 参ります (mairimasu) = is coming"
+        heard: "It starts \"mamonaku…\" and the rest trails off. That one word means step back and get ready."
+        say:
+          - {ja: "まもなく電車が参ります", kana: "まもなく でんしゃ が まいります"}
+          - {ja: "まもなく2番線に電車が参ります", kana: "まもなく にばんせん に でんしゃ が まいります", en: "A train is arriving at platform 2 soon", choices: ["A train is arriving at platform 2 soon", "A train is arriving at platform 12 soon", "The train at platform 2 has just left", "Platform 2 is closed"]}
+      - id: st-line
+        p: 0.7
+        en: "Please stand back behind the yellow line"
+        key: "黄色い線 (kiiroi sen) = yellow line; お下がりください (osagari kudasai) = please step back"
+        say:
+          - {ja: "危ないですから黄色い線の内側までお下がりください", kana: "あぶない です から きいろい せん の うちがわ まで おさがり ください"}
+          - {ja: "黄色い点字ブロックまでお下がりください", kana: "きいろい てんじ ぶろっく まで おさがり ください"}
+      - id: st-bound
+        p: 0.8
+        en: "This train is bound for Tokyo"
+        key: "行き (yuki) = bound for. 次は (tsugi wa) would mean the next stop instead"
+        heard: "\"toukyou-yuki desu\". Listen for \"yuki\" right after the place name."
+        say:
+          - {ja: "この電車は東京行きです", kana: "この でんしゃ は とうきょう ゆき です", choices: ["This train goes to Tokyo", "The next stop is Tokyo", "Change here for Tokyo", "This train came from Tokyo"]}
+          - {ja: "この電車は各駅停車、新宿行きです", kana: "この でんしゃ は かくえき ていしゃ、 しんじゅく ゆき です", en: "A local train (stops everywhere), bound for Shinjuku", choices: ["A local to Shinjuku, stopping everywhere", "An express to Shinjuku, few stops", "The next stop is Shinjuku", "Change at Shinjuku"]}
+      - id: st-next
+        p: 0.8
+        en: "The next stop is Shibuya"
+        key: "次は (tsugi wa) = next is; the name is said twice"
+        say:
+          - {ja: "次は渋谷、渋谷です", kana: "つぎ は しぶや、 しぶや です", choices: ["The next stop is Shibuya", "This train goes to Shibuya", "We are now at Shibuya", "Change at Shibuya"]}
+          - {ja: "まもなく渋谷です", kana: "まもなく しぶや です", en: "Arriving at Shibuya shortly", choices: ["Arriving at Shibuya shortly", "This train goes to Shibuya", "Shibuya is two stops away", "Shibuya was the last stop"]}
+      - id: st-transfer
+        p: 0.6
+        en: "Change here for the Yamanote Line"
+        key: "乗り換え (norikae) = transfer"
+        say:
+          - {ja: "山手線はお乗り換えです", kana: "やまのてせん は おのりかえ です"}
+          - {ja: "地下鉄線はお乗り換えください", kana: "ちかてつせん は おのりかえ ください", en: "Change here for the subway"}
+      - id: st-doors
+        p: 0.6
+        en: "The doors on the left will open"
+        key: "出口 (deguchi) = exit; 左側 (hidarigawa) = left side; 右側 (migigawa) = right side"
+        say:
+          - {ja: "お出口は左側です", kana: "お でぐち は ひだりがわ です", choices: ["Doors open on the left", "Doors open on the right", "The exit is upstairs", "Doors are closing"]}
+          - {ja: "お出口は右側です", kana: "お でぐち は みぎがわ です", en: "The doors on the right will open", choices: ["Doors open on the right", "Doors open on the left", "The exit is upstairs", "Doors are closing"]}
+          - {ja: "ドアが閉まります、ご注意ください", kana: "どあ が しまります、 ご ちゅうい ください", en: "The doors are closing, careful"}
+      - id: st-skip
+        p: 0.4
+        en: "This express does not stop at Ebisu"
+        key: "止まりません (tomarimasen) = doesn't stop; 急行 (kyuukou) = express"
+        say:
+          - {ja: "この電車は恵比寿には止まりません", kana: "この でんしゃ は えびす に は とまりません", en: "This train does not stop at Ebisu"}
+          - {ja: "急行は恵比寿には止まりません", kana: "きゅうこう は えびす に は とまりません"}
+        note: "If you need a small station, take the 各駅停車 (kakueki teisha), the local that stops everywhere."
+      - id: st-delay
+        p: 0.4
+        en: "Trains are delayed because of an accident"
+        key: "遅れ (okure) = delay; 影響 (eikyou) = effect of; 見合わせ (miawase) = suspended"
+        say:
+          - {ja: "人身事故の影響で、電車に遅れが出ております", kana: "じんしん じこ の えいきょう で、 でんしゃ に おくれ が でて おります"}
+          - {ja: "ただいま運転を見合わせております", kana: "ただいま うんてん を みあわせて おります", en: "Service is suspended right now"}
+        note: "見合わせ means nothing is running. Check another line or ask the station staff for a 振替 (furikae), a ticket you can use on another line."
+      - id: st-gate
+        p: 0.5
+        en: "Not enough money on the card. Please top it up."
+        key: "残高 (zandaka) = balance; 不足 (fusoku) = short; チャージ (chaaji) = top up"
+        heard: "The gate's own voice, with a beep and the flaps shutting."
+        say:
+          - {ja: "残高が不足しています、チャージしてください", kana: "ざんだか が ふそく して います、 ちゃーじ して ください"}
+          - {ja: "精算機で精算してください", kana: "せいさんき で せいさん して ください", en: "Pay the difference at the fare adjustment machine"}
+        note: "The 精算機 (seisanki) is the yellow-labelled machine just before the gates. Tap your card on it and pay the shortfall."
+      - id: st-window
+        p: 0.5
+        en: "Where are you travelling to? (ticket window)"
+        key: "どちら (dochira) = where; 切符 (kippu) = ticket"
+        say:
+          - {ja: "どちらまでの切符ですか", kana: "どちら まで の きっぷ です か"}
+          - {ja: "何名様ですか、大人の方だけですか", kana: "なんめいさま です か、 おとな の かた だけ です か", en: "How many? Adults only?"}
+        replies:
+          - {ja: "京都まで、大人一枚お願いします", kana: "きょうと まで、 おとな いちまい おねがい します", en: "To Kyoto, one adult, please"}
+          - {ja: "大人二枚です", kana: "おとな にまい です", en: "Two adults"}
+      - id: st-seat
+        p: 0.5
+        en: "Reserved or non-reserved seat?"
+        key: "指定席 (shiteiseki) = reserved; 自由席 (jiyuuseki) = non-reserved"
+        say:
+          - {ja: "指定席と自由席、どちらになさいますか", kana: "していせき と じゆうせき、 どちら に なさい ます か"}
+          - {ja: "窓側と通路側、どちらがよろしいですか", kana: "まどがわ と つうろがわ、 どちら が よろしい です か", en: "Window or aisle?"}
+        replies:
+          - {ja: "指定席でお願いします", kana: "していせき で おねがい します", en: "Reserved, please"}
+          - {ja: "自由席で", kana: "じゆうせき で", en: "Non-reserved"}
+          - {ja: "窓側で", kana: "まどがわ で", en: "Window"}
+          - {ja: "通路側で", kana: "つうろがわ で", en: "Aisle"}
+      - {id: st-ask-stop, kind: you, en: "Does this train stop at Kyoto?", say: [{ja: "この電車は京都に止まりますか", kana: "この でんしゃ は きょうと に とまります か"}]}
+      - {id: st-ask-platform, kind: you, en: "Which platform for the train to Kyoto?", say: [{ja: "京都行きは何番線ですか", kana: "きょうと ゆき は なんばんせん です か"}]}
+
+  # ── Taxi ─────────────────────────────────────────────────────────────
+  - id: taxi
+    title: Taxi
+    blurb: Where to, the expressway question, "around here OK?", and paying. The door opens by itself.
+    steps:
+      - id: tx-where
+        en: "Where to?"
+        key: "どちら (dochira) = where; まで (made) = up to"
+        heard: "Often just \"dochira made?\" over the shoulder."
+        say:
+          - {ja: "どちらまでですか", kana: "どちら まで です か"}
+          - {ja: "どちらまで行かれますか", kana: "どちら まで いかれ ます か"}
+          - {ja: "どちらまでお送りしましょうか", kana: "どちら まで おおくり しましょう か"}
+        replies:
+          - {ja: "この住所までお願いします", kana: "この じゅうしょ まで おねがい します", en: "To this address, please (show your phone)"}
+          - {ja: "東京駅までお願いします", kana: "とうきょう えき まで おねがい します", en: "To Tokyo Station, please"}
+        note: "Show the address or the map pin on your phone. Drivers read the Japanese address better than a place name."
+      - id: tx-belt
+        p: 0.5
+        en: "Please fasten your seat belt"
+        key: "シートベルト (shiito beruto); お締め (oshime) = fasten"
+        say:
+          - {ja: "シートベルトをお締めください", kana: "しーと べると を おしめ ください"}
+          - {ja: "後ろの席もシートベルトをお願いします", kana: "うしろ の せき も しーと べると を おねがい します"}
+      - id: tx-highway
+        p: 0.4
+        en: "Is it OK to take the expressway? (it costs more)"
+        key: "高速 (kousoku) = expressway; 下の道 (shita no michi) = ordinary roads"
+        say:
+          - {ja: "高速を使ってもよろしいですか", kana: "こうそく を つかって も よろしい です か"}
+          - {ja: "高速料金がかかりますが、よろしいですか", kana: "こうそく りょうきん が かかります が、 よろしい です か", en: "There's an expressway toll. Is that OK?"}
+        replies:
+          - {ja: "はい、お願いします", kana: "はい、 おねがい します", en: "Yes, please"}
+          - {ja: "下の道でお願いします", kana: "した の みち で おねがい します", en: "Ordinary roads, please"}
+      - id: tx-here
+        p: 0.8
+        en: "Is around here OK?"
+        key: "この辺 (kono hen) = around here"
+        say:
+          - {ja: "この辺りでよろしいですか", kana: "この あたり で よろしい です か"}
+          - {ja: "こちらでよろしいですか", kana: "こちら で よろしい です か"}
+          - {ja: "入口の前までつけますか", kana: "いりぐち の まえ まで つけ ます か", en: "Shall I pull up right at the entrance?"}
+        replies:
+          - {ja: "ここで大丈夫です", kana: "ここ で だいじょうぶ です", en: "Here is fine"}
+          - {ja: "もう少し先までお願いします", kana: "もう すこし さき まで おねがい します", en: "A little further, please"}
+      - id: tx-fare
+        p: 0.9
+        en: "That's 1,280 yen"
+        key: "〜円になります (…en ni narimasu) = that comes to"
+        heard: "Numbers go fast. If you lose it, the meter shows the same figure."
+        say:
+          - {ja: "1280円になります", kana: "せん にひゃく はちじゅう えん に なります", choices: ["1,280 yen", "1,820 yen", "2,180 yen", "1,208 yen"]}
+          - {ja: "3450円です", kana: "さんぜん よんひゃく ごじゅう えん です", en: "That's 3,450 yen", choices: ["3,450 yen", "3,540 yen", "4,350 yen", "3,405 yen"]}
+      - id: tx-pay
+        p: 0.7
+        en: "How would you like to pay?"
+        key: "お支払い (oshiharai) = payment; 現金 (genkin) = cash"
+        say:
+          - {ja: "お支払いはどうされますか", kana: "お しはらい は どう され ます か"}
+          - {ja: "カードでよろしいですか", kana: "かーど で よろしい です か", en: "By card, is that right?"}
+        replies:
+          - {ja: "カードで", kana: "かーど で", en: "By card"}
+          - {ja: "現金で", kana: "げんきん で", en: "Cash"}
+          - {ja: "交通系ICで", kana: "こうつうけい あいしー で", en: "With my IC transit card"}
+      - id: tx-receipt
+        p: 0.5
+        en: "Do you need a receipt? (taxi)"
+        key: "領収書 (ryoushuusho) = receipt"
+        say:
+          - {ja: "領収書はご利用ですか", kana: "りょうしゅうしょ は ごりよう です か"}
+          - {ja: "領収書いりますか", kana: "りょうしゅうしょ いります か"}
+        replies:
+          - {ja: "はい、お願いします", kana: "はい、 おねがい します", en: "Yes, please"}
+          - {ja: "大丈夫です", kana: "だいじょうぶ です", en: "No thanks"}
+      - id: tx-door
+        p: 0.6
+        en: "The door opens by itself, careful"
+        key: "ドア (doa); 開きます (akimasu) = opens"
+        say:
+          - {ja: "ドアが開きますのでお気をつけください", kana: "どあ が あきます ので お きをつけ ください"}
+          - {ja: "お忘れ物のないようお気をつけください", kana: "お わすれもの の ない よう お きをつけ ください", en: "Mind you don't leave anything behind"}
+        note: "Don't open or shut the back door yourself; the driver works it."
+      - {id: tx-ask-here, kind: you, en: "Please stop here.", say: [{ja: "ここで止めてください", kana: "ここ で とめて ください"}]}
+      - {id: tx-ask-time, kind: you, en: "About how long will it take?", say: [{ja: "どのくらいかかりますか", kana: "どの くらい かかります か"}]}
+
+  # ── Asking directions ────────────────────────────────────────────────
+  - id: directions
+    title: Asking the way
+    blurb: You ask a passer-by. They answer with straight on, the second light, left, five minutes, and "shall I walk you?"
+    steps:
+      - {id: dr-ask, kind: you, en: "Excuse me, where is the station?", say: [{ja: "すみません、駅はどこですか", kana: "すみません、 えき は どこ です か"}]}
+      - id: dr-straight
+        en: "Go straight along this road"
+        key: "まっすぐ (massugu) = straight; 道 (michi) = road"
+        say:
+          - {ja: "この道をまっすぐ行ってください", kana: "この みち を まっすぐ いって ください"}
+          - {ja: "このまままっすぐです", kana: "この まま まっすぐ です", en: "Just keep going straight"}
+      - id: dr-turn
+        p: 0.8
+        en: "Turn right at the second traffic light"
+        key: "信号 (shingou) = traffic light; 右 (migi) = right; 左 (hidari) = left; 曲がる (magaru) = turn"
+        heard: "\"futatsume no shingou o migi\". Often just the noun and the side, no verb."
+        say:
+          - {ja: "二つ目の信号を右に曲がってください", kana: "ふたつめ の しんごう を みぎ に まがって ください", choices: ["Right at the second light", "Left at the second light", "Right at the first light", "Straight past two lights"]}
+          - {ja: "あの角を左です", kana: "あの かど を ひだり です", en: "Left at that corner", choices: ["Left at that corner", "Right at that corner", "Left at the light", "It's on that corner"]}
+          - {ja: "突き当たりを右です", kana: "つきあたり を みぎ です", en: "Right at the end of the road", choices: ["Right at the end of the road", "Left at the end of the road", "Right at the next corner", "It's at the end of the road"]}
+      - id: dr-landmark
+        p: 0.6
+        en: "There's a konbini on your right"
+        key: "右手 (migite) = right-hand side; 左手 (hidarite) = left-hand side"
+        say:
+          - {ja: "右手にコンビニがあります", kana: "みぎて に こんびに が あります", choices: ["A konbini on your right", "A konbini on your left", "Turn right at the konbini", "It's inside the konbini"]}
+          - {ja: "左手に見えてきます", kana: "ひだりて に みえて きます", en: "You'll see it on your left", choices: ["You'll see it on your left", "You'll see it on your right", "Turn left and look", "You can't see it from here"]}
+      - id: dr-there
+        p: 0.5
+        en: "It's that building you can see over there"
+        key: "あそこ (asoko) = over there; ビル (biru) = building"
+        say:
+          - {ja: "あそこに見えるビルです", kana: "あそこ に みえる びる です"}
+          - {ja: "あの白いビルの二階です", kana: "あの しろい びる の にかい です", en: "2nd floor of that white building", choices: ["2nd floor of the white building", "12th floor of the white building", "2nd floor of the red building", "Behind the white building"]}
+      - id: dr-time
+        p: 0.7
+        en: "About five minutes on foot"
+        key: "歩いて (aruite) = on foot; くらい (kurai) = about"
+        say:
+          - {ja: "歩いて5分くらいです", kana: "あるいて ごふん くらい です", choices: ["About 5 minutes on foot", "About 15 minutes on foot", "About 5 minutes by train", "5 stations away"]}
+          - {ja: "ちょっと遠いですね、電車の方がいいですよ", kana: "ちょっと とおい です ね、 でんしゃ の ほう が いい です よ", en: "It's a bit far. The train is better."}
+      - id: dr-dunno
+        p: 0.4
+        en: "Sorry, I don't really know"
+        key: "わからない (wakaranai) = don't know; この辺 (kono hen) = around here"
+        say:
+          - {ja: "すみません、ちょっとわからないです", kana: "すみません、 ちょっと わからない です"}
+          - {ja: "この辺の者じゃないので、すみません", kana: "この へん の もの じゃ ない ので、 すみません", en: "Sorry, I'm not from around here"}
+        note: "ちょっと… with a wince is a polite no. Thank them and ask someone else, or a konbini or a koban (police box)."
+      - id: dr-walk
+        p: 0.4
+        en: "Shall I walk you there?"
+        key: "一緒に (issho ni) = together"
+        say:
+          - {ja: "一緒に行きましょうか", kana: "いっしょ に いきましょう か"}
+          - {ja: "近くなので、案内しますよ", kana: "ちかく な ので、 あんない します よ", en: "It's close, I'll show you"}
+        replies:
+          - {ja: "ありがとうございます、助かります", kana: "ありがとう ございます、 たすかります", en: "Thank you, that really helps"}
+          - {ja: "大丈夫です、ありがとうございます", kana: "だいじょうぶ です、 ありがとう ございます", en: "I'm OK, thank you"}
+      - {id: dr-ask-near, kind: you, en: "Is it near here?", say: [{ja: "この近くですか", kana: "この ちかく です か"}]}
+      - {id: dr-ask-walk, kind: you, en: "Can I walk there?", say: [{ja: "歩いて行けますか", kana: "あるいて いけ ます か"}]}
+      - {id: dr-ask-map, kind: you, en: "Could you show me on the map?", say: [{ja: "地図で教えてもらえますか", kana: "ちず で おしえて もらえ ます か"}]}
+
+  # ── Pharmacy ─────────────────────────────────────────────────────────
+  - id: pharmacy
+    title: Pharmacy counter
+    blurb: What's wrong, since when, allergies, other medicine, and how many to take a day.
+    steps:
+      - {id: ph-ask, kind: you, en: "Do you have cold medicine?", say: [{ja: "風邪薬はありますか", kana: "かぜぐすり は あります か"}]}
+      - id: ph-what
+        en: "What seems to be the problem?"
+        key: "どうされましたか (dou saremashita ka) = what happened to you"
+        say:
+          - {ja: "どうされましたか", kana: "どう され ました か"}
+          - {ja: "どんな症状ですか", kana: "どんな しょうじょう です か", en: "What are your symptoms?"}
+        replies:
+          - {ja: "頭が痛いです", kana: "あたま が いたい です", en: "I have a headache"}
+          - {ja: "熱があります", kana: "ねつ が あります", en: "I have a fever"}
+          - {ja: "喉が痛いです", kana: "のど が いたい です", en: "I have a sore throat"}
+          - {ja: "お腹を壊しました", kana: "お なか を こわしました", en: "I have an upset stomach"}
+      - id: ph-since
+        p: 0.7
+        en: "Since when?"
+        key: "いつから (itsu kara) = since when"
+        say:
+          - {ja: "いつからですか", kana: "いつ から です か"}
+          - {ja: "いつ頃からその症状がありますか", kana: "いつごろ から その しょうじょう が あります か"}
+        replies:
+          - {ja: "昨日からです", kana: "きのう から です", en: "Since yesterday"}
+          - {ja: "今朝からです", kana: "けさ から です", en: "Since this morning"}
+      - id: ph-allergy
+        p: 0.6
+        en: "Do you have any allergies?"
+        key: "アレルギー (arerugii) = allergy"
+        say:
+          - {ja: "アレルギーはありますか", kana: "あれるぎー は あります か"}
+          - {ja: "お薬のアレルギーはございますか", kana: "お くすり の あれるぎー は ございます か", en: "Are you allergic to any medicine?"}
+        replies:
+          - {ja: "特にないです", kana: "とくに ない です", en: "Not really, no"}
+      - id: ph-other
+        p: 0.5
+        en: "Are you taking any other medicine?"
+        key: "飲まれて (nomarete) = taking (medicine is 'drunk' in Japanese)"
+        say:
+          - {ja: "他にお薬は飲まれていますか", kana: "ほか に お くすり は のまれて います か"}
+          - {ja: "今飲んでいるお薬はありますか", kana: "いま のんで いる お くすり は あります か"}
+        replies:
+          - {ja: "飲んでいません", kana: "のんで いません", en: "I'm not taking anything"}
+      - id: ph-dose
+        p: 0.9
+        en: "Two tablets, three times a day, after meals"
+        key: "一日 (ichinichi) = a day; 回 (kai) = times; 錠 (jou) = tablets; 食後 (shokugo) = after meals"
+        say:
+          - {ja: "一日三回、食後に二錠ずつ飲んでください", kana: "いちにち さんかい、 しょくご に にじょう ずつ のんで ください", choices: ["2 tablets, 3 times a day, after meals", "3 tablets, 2 times a day, after meals", "2 tablets, 3 times a day, before meals", "1 tablet, 3 times a day, after meals"]}
+          - {ja: "一日二回、朝と夜に飲んでください", kana: "いちにち にかい、 あさ と よる に のんで ください", en: "Twice a day, morning and night", choices: ["Twice a day, morning and night", "Three times a day, with meals", "Once a day, at night", "Twice a day, before meals"]}
+      - id: ph-drowsy
+        p: 0.5
+        en: "It can make you drowsy, so don't drive"
+        key: "眠く (nemuku) = sleepy; 運転 (unten) = driving"
+        say:
+          - {ja: "眠くなることがありますので、運転はしないでください", kana: "ねむく なる こと が あります ので、 うんてん は しないで ください"}
+          - {ja: "空腹時は避けてください", kana: "くうふくじ は さけて ください", en: "Don't take it on an empty stomach"}
+      - id: ph-pharmacist
+        p: 0.3
+        en: "I'll check with the pharmacist. One moment."
+        key: "薬剤師 (yakuzaishi) = pharmacist"
+        say:
+          - {ja: "薬剤師に確認しますので、少々お待ちください", kana: "やくざいし に かくにん します ので、 しょうしょう おまち ください"}
+          - {ja: "こちらは薬剤師がいないと販売できません", kana: "こちら は やくざいし が いない と はんばい できません", en: "We can't sell this without the pharmacist here"}
+        note: "Some medicines are sold only when the pharmacist is on duty, usually daytime. A big drugstore near a station is your best bet in the evening."
+      - {id: ph-ask-dose, kind: you, en: "How many times a day?", say: [{ja: "一日何回ですか", kana: "いちにち なんかい です か"}]}
+
+  # ── Temples, museums, sights ─────────────────────────────────────────
+  - id: sights
+    title: Temples, museums & sights
+    blurb: Tickets, the end of the queue, shoes off, no photos, lockers, and closing time.
+    steps:
+      - id: sg-queue
+        p: 0.5
+        en: "The end of the queue is here"
+        key: "最後尾 (saikoubi) = the very back of the line; 並んで (narande) = line up"
+        say:
+          - {ja: "最後尾はこちらです", kana: "さいこうび は こちら です"}
+          - {ja: "一列に並んでお待ちください", kana: "いちれつ に ならんで おまち ください", en: "Please wait in a single line"}
+      - id: sg-ticket
+        p: 0.8
+        en: "500 yen per adult"
+        key: "大人 (otona) = adult; お一人様 (ohitorisama) = per person"
+        say:
+          - {ja: "大人お一人様500円です", kana: "おとな お ひとりさま ごひゃく えん です", choices: ["500 yen per adult", "500 yen for two adults", "5,000 yen per adult", "Free for adults"]}
+          - {ja: "大人二名様で1600円です", kana: "おとな にめいさま で せん ろっぴゃく えん です", en: "1,600 yen for two adults", choices: ["1,600 yen for two adults", "1,600 yen per adult", "600 yen for two adults", "6,100 yen for two adults"]}
+          - {ja: "チケットはあちらの券売機でお買い求めください", kana: "ちけっと は あちら の けんばいき で おかいもとめ ください", en: "Buy tickets at the machine over there"}
+        replies:
+          - {ja: "大人二枚お願いします", kana: "おとな にまい おねがい します", en: "Two adults, please"}
+      - id: sg-shoes
+        p: 0.6
+        en: "Please take your shoes off here"
+        key: "靴 (kutsu) = shoes; 脱いで (nuide) = take off"
+        say:
+          - {ja: "こちらで靴を脱いでください", kana: "こちら で くつ を ぬいで ください"}
+          - {ja: "靴はこの袋に入れてお持ちください", kana: "くつ は この ふくろ に いれて おもち ください", en: "Put your shoes in this bag and carry them"}
+      - id: sg-photo
+        p: 0.7
+        en: "No photography inside"
+        key: "撮影 (satsuei) = photography; 禁止 (kinshi) = forbidden; ご遠慮ください (goenryo kudasai) = please don't"
+        say:
+          - {ja: "館内は撮影禁止です", kana: "かんない は さつえい きんし です"}
+          - {ja: "こちらでの撮影はご遠慮ください", kana: "こちら で の さつえい は ごえんりょ ください", en: "Please don't take photos here"}
+          - {ja: "フラッシュはご遠慮ください", kana: "ふらっしゅ は ごえんりょ ください", en: "No flash, please"}
+        note: "ご遠慮ください sounds soft but it's a rule, not a request."
+      - id: sg-locker
+        p: 0.4
+        en: "Please put large bags in a locker"
+        key: "荷物 (nimotsu) = bags; ロッカー (rokkaa); お預け (oazuke) = leave"
+        say:
+          - {ja: "大きなお荷物はロッカーにお預けください", kana: "おおきな お にもつ は ろっかー に おあずけ ください"}
+          - {ja: "リュックは前に持ってください", kana: "りゅっく は まえ に もって ください", en: "Please wear your backpack on your front"}
+      - id: sg-close
+        p: 0.5
+        en: "We're closing soon"
+        key: "閉館 (heikan) = closing; 最終入場 (saishuu nyuujou) = last entry"
+        say:
+          - {ja: "まもなく閉館時間です", kana: "まもなく へいかん じかん です"}
+          - {ja: "最終入場は4時半です", kana: "さいしゅう にゅうじょう は よじはん です", en: "Last entry is at 4:30", choices: ["Last entry is at 4:30", "Last entry is at 4:00", "It closes at 4:30", "Last entry is at 8:30"]}
+      - id: sg-goshuin
+        p: 0.3
+        en: "Do you have a goshuin book? (temple stamp)"
+        key: "御朱印 (goshuin) = temple stamp; 書き置き (kakioki) = pre-written sheet"
+        say:
+          - {ja: "御朱印帳はお持ちですか", kana: "ごしゅいんちょう は おもち です か"}
+          - {ja: "本日は書き置きのみになります", kana: "ほんじつ は かきおき のみ に なります", en: "Today it's pre-written sheets only"}
+        replies:
+          - {ja: "はい、これです", kana: "はい、 これ です", en: "Yes, here it is"}
+          - {ja: "持っていません", kana: "もって いません", en: "I don't have one"}
+      - {id: sg-ask-photo, kind: you, en: "Is it OK to take photos?", say: [{ja: "写真を撮ってもいいですか", kana: "しゃしん を とって も いい です か"}]}
+      - {id: sg-ask-time, kind: you, en: "Until what time are you open?", say: [{ja: "何時までですか", kana: "なんじ まで です か"}]}
+
+  # ── Small talk ───────────────────────────────────────────────────────
+  - id: chat
+    title: Small talk with locals
+    blurb: The friendly questions at the next stool, on a bench or at a shrine. Where you're from, first time, your Japanese.
+    steps:
+      - id: ch-from
+        en: "Where are you from?"
+        key: "どちら (dochira) / どこ (doko) = where; から (kara) = from"
+        heard: "Casual and quick: \"doko kara?\""
+        say:
+          - {ja: "どちらから来られたんですか", kana: "どちら から こられた ん です か"}
+          - {ja: "どこから来たんですか", kana: "どこ から きた ん です か"}
+          - {ja: "お国はどちらですか", kana: "お くに は どちら です か", en: "Which country are you from?"}
+        replies:
+          - {ja: "アメリカから来ました", kana: "あめりか から きました", en: "From the US"}
+          - {ja: "カナダから来ました", kana: "かなだ から きました", en: "From Canada"}
+        note: "Swap in your own country: 〇〇から来ました (… kara kimashita)."
+      - id: ch-trip
+        p: 0.6
+        en: "Are you here on holiday?"
+        key: "旅行 (ryokou) = travel; 観光 (kankou) = sightseeing; 仕事 (shigoto) = work"
+        say:
+          - {ja: "旅行ですか", kana: "りょこう です か"}
+          - {ja: "観光ですか、お仕事ですか", kana: "かんこう です か、 お しごと です か", en: "Sightseeing or work?"}
+        replies:
+          - {ja: "はい、旅行です", kana: "はい、 りょこう です", en: "Yes, I'm travelling"}
+          - {ja: "観光です", kana: "かんこう です", en: "Sightseeing"}
+      - id: ch-first
+        p: 0.7
+        en: "Is this your first time in Japan?"
+        key: "初めて (hajimete) = first time; 二回目 (nikaime) = second time"
+        say:
+          - {ja: "日本は初めてですか", kana: "にほん は はじめて です か"}
+          - {ja: "日本に来るのは何回目ですか", kana: "にほん に くる の は なんかいめ です か", en: "How many times have you been to Japan?"}
+        replies:
+          - {ja: "はい、初めてです", kana: "はい、 はじめて です", en: "Yes, it's my first time"}
+          - {ja: "二回目です", kana: "にかいめ です", en: "It's my second time"}
+      - id: ch-howlong
+        p: 0.6
+        en: "How long are you staying in Japan?"
+        key: "どのくらい (dono kurai) = how long; 週間 (shuukan) = weeks"
+        say:
+          - {ja: "日本にはどのくらいいるんですか", kana: "にほん に は どの くらい いる ん です か"}
+          - {ja: "いつまで日本にいるんですか", kana: "いつ まで にほん に いる ん です か", en: "Until when are you in Japan?"}
+        replies:
+          - {ja: "二週間くらいです", kana: "にしゅうかん くらい です", en: "About two weeks"}
+          - {ja: "来週帰ります", kana: "らいしゅう かえります", en: "I go home next week"}
+      - id: ch-skill
+        p: 0.7
+        en: "Your Japanese is good!"
+        key: "上手 (jouzu) = skilful"
+        say:
+          - {ja: "日本語上手ですね", kana: "にほんご じょうず です ね"}
+          - {ja: "日本語話せるんですか", kana: "にほんご はなせる ん です か", en: "You can speak Japanese?"}
+        replies:
+          - {ja: "いえいえ、まだまだです", kana: "いえいえ、 まだまだ です", en: "Oh no, I've a long way to go"}
+          - {ja: "少しだけです、勉強中です", kana: "すこし だけ です、 べんきょうちゅう です", en: "Just a little. I'm learning."}
+        note: "Saying \"thank you\" is fine, but まだまだです (still a long way) is the expected modest answer and always gets a smile."
+      - id: ch-how
+        p: 0.6
+        en: "How are you finding Japan?"
+        key: "どう (dou) = how"
+        say:
+          - {ja: "日本はどうですか", kana: "にほん は どう です か"}
+          - {ja: "どこに行きましたか", kana: "どこ に いきました か", en: "Where have you been so far?"}
+        replies:
+          - {ja: "すごく楽しいです", kana: "すごく たのしい です", en: "I'm having a great time"}
+          - {ja: "ご飯がおいしいです", kana: "ごはん が おいしい です", en: "The food is delicious"}
+          - {ja: "京都に行きました", kana: "きょうと に いきました", en: "I went to Kyoto"}
+      - id: ch-food
+        p: 0.4
+        en: "Are you OK with Japanese food?"
+        key: "食べ物 (tabemono) = food; 食べられます (taberaremasu) = can eat"
+        say:
+          - {ja: "日本の食べ物は大丈夫ですか", kana: "にほん の たべもの は だいじょうぶ です か"}
+          - {ja: "納豆は食べられますか", kana: "なっとう は たべられます か", en: "Can you eat natto?"}
+        replies:
+          - {ja: "大好きです", kana: "だいすき です", en: "I love it"}
+          - {ja: "納豆はちょっと…", kana: "なっとう は ちょっと", en: "Natto is a bit… (no)"}
+      - id: ch-photo
+        p: 0.4
+        en: "Shall I take your photo?"
+        key: "写真 (shashin) = photo; 撮り (tori) = take"
+        say:
+          - {ja: "写真撮りましょうか", kana: "しゃしん とりましょう か"}
+          - {ja: "撮りますよ、はい、チーズ", kana: "とります よ、 はい、 ちーず", en: "Taking it now. Say cheese!"}
+        replies:
+          - {ja: "お願いします", kana: "おねがい します", en: "Yes, please"}
+          - {ja: "大丈夫です、ありがとうございます", kana: "だいじょうぶ です、 ありがとう ございます", en: "I'm fine, thanks"}
+      - id: ch-bye
+        en: "Enjoy your trip!"
+        key: "楽しんで (tanoshinde) = enjoy; 気をつけて (ki o tsukete) = take care"
+        say:
+          - {ja: "楽しんでくださいね", kana: "たのしんで ください ね"}
+          - {ja: "気をつけてね", kana: "き を つけて ね", en: "Take care!"}
+          - {ja: "良い旅を", kana: "よい たび を", en: "Have a good trip!"}
+        replies:
+          - {ja: "ありがとうございます", kana: "ありがとう ございます", en: "Thank you"}
+      - {id: ch-ask-photo, kind: you, en: "Could you take a photo of us?", say: [{ja: "写真を撮ってもらえますか", kana: "しゃしん を とって もらえ ます か"}]}
+      - {id: ch-ask-local, kind: you, en: "Is there a place you'd recommend around here?", say: [{ja: "この辺でおすすめの場所はありますか", kana: "この へん で おすすめ の ばしょ は あります か"}]}
 
   # ── Your turn: chaining requests and lifelines ───────────────────────
   - id: yours

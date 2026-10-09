@@ -37,9 +37,10 @@ flow and randomize everything else.
 ## Packs
 
 `packs/ja-service.yaml` covers Japan: konbini, fast food and cafés, restaurants and izakaya,
-ramen shops, shops and drugstores, and hotel front desks. A "Your turn" scene adds chained
-requests and lifelines ("one more time, please", "sorry, I didn't catch that"). The schema is
-documented at the top of the file.
+ramen shops, shops and drugstores, and hotel front desks; then getting around (train station,
+taxi, asking the way, the pharmacy counter, temples and museums) and small talk with locals. A
+"Your turn" scene adds chained requests and lifelines ("one more time, please", "sorry, I didn't
+catch that"). The schema is documented at the top of the file.
 
 A pack doesn't care about the language. A scene is a list of steps, each step has variants and
 replies, and that works for a café in Madrid as well as a konbini in Tokyo. Adding a language

@@ -94,3 +94,17 @@ which teaches distrust instead of Japanese.
 
 **Revisit if:** a pack needs cross-scene lines that are deliberately confusable. Add an explicit
 group field rather than dropping the rule.
+
+## D9 — Beyond shop staff: getting around and small talk (2026-10-09)
+
+**Decision:** The pack grows from 7 to 13 scenes: train station (including platform
+announcements and the ticket gate's voice), taxi, asking the way, pharmacy counter, temples and
+museums, and small talk with locals.
+
+**Why:** The owner asked for conversations "besides konbini staff". These still fit D2: each is a
+short, formulaic exchange a visitor meets daily. Small talk is the edge case, but a tourist hears
+the same eight questions (where from, first time, how long, your Japanese is good) so it drills
+like a checkout. Announcements are machine speech, not a person, yet the drill is the same: catch
+the key word (まもなく, 〜行き, 次は) at full speed.
+
+**Revisit if:** the trip notes show a scene never came up. Lower its steps' `p` before removing it.

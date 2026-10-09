@@ -1,18 +1,19 @@
 # Hand-off: Konbini Ears
 
-_Last updated: 2026-10-08. The owner is in Japan until 2026-10-16 and uses the app on an iPhone 8._
+_Last updated: 2026-10-09. The owner is in Japan until 2026-10-16 and uses the app on an iPhone 8._
 
 ## State now
 
 - **Live:** https://jotnguyen.github.io/konbini-ears/ is the `gh-pages` branch, holding `index.html`, `manifest.webmanifest`, `icons/`,
   `sw.js` and `konbini-ears.apkg`. It was checked at phone size in a desktop browser on 2026-10-07:
-  the page loads, audio plays, all 336 clips decode, and the service worker cached the page.
+  the page loads, audio plays, all 336 clips decode, and the service worker cached the page. The 13-scene build (645 clips, 11.2 MB) went live on 2026-10-09.
   The owner installed it on the iPhone 8 home screen on 2026-10-08 and it works. Not yet checked:
   opening it offline with airplane mode on.
-- **Pack:** `packs/ja-service.yaml` has 7 scenes and 76 steps, 360 clips in all. It was revised on 2026-10-09 after an
+- **Pack:** `packs/ja-service.yaml` has 13 scenes and 139 steps (412 lines). On 2026-10-09 six scenes beyond shop staff were
+  added at the owner's request (station, taxi, asking the way, pharmacy, sights, small talk; D9). Earlier that day it was revised after an
   adversarial review (`docs/reviews/2026-10-09-japanese-pack.md`). Before that it had 140 staff lines, 18 your-turn lines and
   55 replies. Staff lines are recorded in `jf_alpha` and `jm_kumo` at speed 1.0, your lines in
-  `jm_kumo`. 14 lines are spoken from kana because OpenJTalk misreads their kanji; the full list is
+  `jm_kumo`. 34 lines are spoken from kana because OpenJTalk misreads their kanji; the full list is
   in `dist/report-ja-service.json`.
 - **Repo:** public on `main`, with no open branches or PRs. CI hasn't been set up.
 - **Artifact copy:** https://claude.ai/artifact/4BXk3QBMyPseSErv7P1LMb. The owner decided to keep

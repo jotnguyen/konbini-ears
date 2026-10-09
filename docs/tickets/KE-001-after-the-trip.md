@@ -41,10 +41,8 @@ missing. Without it, the pack is guesswork.
 
 Each of these fits D2 (phrases to get by). Add one only if it's in the owner's notes or the owner
 asks for it:
-- **Train station:** ticket window, platform and transfer questions, and the key words in
-  announcements (まもなく, 〜行き, 乗り換え).
-- **Taxi:** the destination, 「ここで大丈夫です」, and paying.
-- **Pharmacy counter:** symptoms in simple words, and 「一日何回ですか」.
+- ~~Train station, taxi, pharmacy counter~~: added on 2026-10-09 at the owner's request, with
+  asking the way, temples and museums, and small talk (D9). Trip notes can still correct them.
 - **Numbers drill:** more amounts as `choices` variants. Hearing prices is where people freeze.
 
 ## Out of scope (see DECISIONS.md)
